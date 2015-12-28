@@ -1,0 +1,29 @@
+    <div class="container content">
+        <div class="row">
+                <div class="panel panel-default full-width" >
+
+                    <div class="panel-body">
+                        <form id="form" name="form" action="/message" method="post"> 
+                        <!--
+                        <div class="form-group">
+                                <label>广告标题 <span class="mandatory">*</span></label>
+                                <input type="text" name="title" id="title" class="form-control">
+                        </div>-->
+                        <div class="form-group">
+                                <label>留言内容</label>
+                                <textarea style="text-align:left"  name="description" id="description" class="form-control">
+                                </textarea>
+                        </div>
+                        
+                        </form>
+                        <input type="hidden" name="client" value="<%=req.param('client')%>">
+                        <input type="button" class="btn btn-default" value="创建" onClick="javascript:document.form.submit();"/>
+                        <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>  
+                    </div>
+                </div>              
+        </div>
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    
+

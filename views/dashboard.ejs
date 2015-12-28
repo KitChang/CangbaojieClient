@@ -1,0 +1,496 @@
+
+    
+    <div class="container container-fluid container-fullw bg-white">
+        <div class=“row”>
+            <div class="col-sm-4">
+                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel-body">
+                    <h2 class="StepTitle">我要推广</h2>
+                    <p class="text-small">申请在某个地区推广</p>
+                    <p class="links cl-effect-1">
+                        <a href="/request/new" class="button button-glow button-border button-rounded button-primary">推广</a>
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel-body">
+                    <h2 class="StepTitle">我要充值</h2>
+                    <p class="text-small">账户:  <%=user.client.name%>, 余额:  $<%=client.account%> </p>
+                    <p class="links cl-effect-1">
+                        <a href="#topup" class="fancybox button button-glow button-border button-rounded button-primary">充值</a>
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel-body">
+                    <h2 class="StepTitle">给藏宝街留言</h2>
+                    <p class="text-small">向我们表达您的意见</p>
+                    <p class="links cl-effect-1">
+                        <a href="#message" class="fancybox button button-glow button-border button-rounded button-primary">留言</a>
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div class="container content">
+        <div class="row">
+            <div class="col-md-12">
+            <div class="panel panel-default full-width">
+                <div class="panel-body">
+                    <form class="form-inline" action="/search" method="get">
+                        <div class="panel-elem">
+                        <div class="form-group">
+                            <select class="form-control" id="type" name="locationType">
+                                <%
+                                if(req.param("locationType")){
+                                %>
+                                <option value="<%=req.param('locationType')%>" selected><%=req.param('locationType')%></option>
+                                <%
+                                }
+                                %>
+                                <option value="">所有位置类</option>
+                                <option value="公交站">公交站</option>
+                                <option value="公交车">公交车</option>
+                                <option value="电梯">电梯</option>
+                                <option value="路名牌">路名牌</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="state" name="state">
+                                <%
+                                if(req.param("state")){
+                                %>
+                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
+                                <%
+                                }
+                                %>
+                                <option value="广东省">广东省</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="city" name="city">
+                                <%
+                                if(req.param("city")){
+                                %>
+                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
+                                <%
+                                }
+                                %>
+                                
+                                
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region" name="region">
+                                <%
+                                if(req.param("region")){
+                                %>
+                                <option value="<%=req.param('region')%>" selected><%=req.param('region')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="street" name="street">
+                                <%
+                                if(req.param("street")){
+                                %>
+                                <option value="<%=req.param('street')%>" selected><%=req.param('street')%></option>
+                                <%
+                                }
+                                %>
+                                
+                                
+                            </select>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <label>广告</label>
+                        <select class="form-control" name="advertisement">
+                            <option value="">所有广告</option>
+                            <%
+                            if(ads!=null){
+                                var ad;
+                                while(ads.length){
+                                    ad = ads.pop();
+                                    
+                                    if(req.param('advertisement')&&ad.id==req.param('advertisement')){
+                            %>
+                            <option value="<%=ad.id%>" selected><%=ad.title%></option>
+                            <%
+                                    }else{
+                            %>
+                            
+                            <option value="<%=ad.id%>"><%=ad.title%></option>
+                            <%
+                                    }
+                                }
+                            }
+                            %>
+                        </select>
+                        </div>
+                        <button class="btn btn-default">搜</button>
+                    </form>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">推广监控（近七日）</div>
+                        <div class="panel-body">
+                        </div>
+                        <canvas id="access-ctx" width="900" height="400"></canvas>
+                    </div>
+                    <div class="panel panel-default clearfix">
+                        <div class="panel-heading">点击量</div>
+                        <div class="panel-body">
+                            总点击量： <%=totalAccess%><br>
+                            今日点击量： <%=accessToday%>
+                        </div>
+                    </div>
+                    <% if(selectedAd){
+                    %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">奖项</div>
+                        <table class="table table-strip" id="prizeTable">
+                            <tr><td>奖项</td><td>数量</td><td>剩余</td></tr>
+                            <tr><td><%=selectedAd.firstPrize%></td>
+                                <td><%=selectedAd.firstPrizeQuantity%></td>
+                                <td><%=selectedAd.firstPrizeQuantityRemain%></td>
+                            </tr>
+                            <tr><td><%=selectedAd.secondPrize%></td>
+                                <td><%=selectedAd.secondPrizeQuantity%></td>
+                                <td><%=selectedAd.secondPrizeQuantityRemain%></td>
+                            </tr>
+                            <tr><td><%=selectedAd.thirdPrize%></td>
+                                <td><%=selectedAd.thirdPrizeQuantity%></td>
+                                <td><%=selectedAd.thirdPrizeQuantityRemain%></td>
+                            </tr>
+                            <tr><td><%=selectedAd.fourthPrize%></td>
+                                <td><%=selectedAd.fourthPrizeQuantity%></td>
+                                <td><%=selectedAd.fourthPrizeQuantityRemain%></td>
+                            </tr>
+                            <tr><td><%=selectedAd.fifthPrize%></td>
+                                <td><%=selectedAd.fifthPrizeQuantity%></td>
+                                <td><%=selectedAd.fifthPrizeQuantityRemain%></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <%
+                    }
+                    %>
+                    
+                </div>
+            </div>
+            
+        </div>
+        </div>
+<div class="row">
+<div class="col-md-12">
+    <div class="col-md-4">
+        <h3>我的消息</h3>
+        <div class="list-group">
+        <%
+            var message;
+            while(clientMessages.length){
+                message = clientMessages.pop();
+        %>
+        <li class="list-group-item">
+            <%=message.message%><span class="badge"><%=moment().to(moment(message.createdAt+""))%></span>
+            
+        </li>
+            
+        <%
+            }
+        %>
+        
+
+        </div>
+        <p>
+        
+        </p>
+    </div>
+</div>
+</div>
+
+          
+      </div>
+      <div id="message">
+        <form method="post" action="/message">
+          <div class="form-group">
+            <label for="exampleInputEmail1">姓名</label>
+            <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<%=user.username%>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">联系电话</label>
+            <input type="text" name="contactPhone" class="form-control" id="exampleInputPassword1" value="<%=user.client.phone%>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">电子邮件</label>
+            <input type="text" name="email" class="form-control" id="exampleInputPassword1" value="<%=user.email%>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">标题</label>
+            <input type="text" name="messageTitle" class="form-control"  style="width: 400px" id="exampleInputPassword1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label>留言内容</label>
+            <textarea style="text-align:left" id="message" name="message" style="width: 400px" class="form-control">
+            </textarea>
+          </div>
+          <button type="submit" class="btn btn-default">提交</button>
+        </form>
+
+      </div>
+    
+      <div id="topup">
+        <form method="post" action="/topup">
+          <div class="form-group">
+            <label for="exampleInputEmail1">充值金额</label>
+            <input type="text" name="topupValue" class="form-control" id="exampleInputEmail1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">姓名</label>
+            <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<%=user.username%>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">联系电话</label>
+            <input type="text" name="contactPhone" class="form-control" id="exampleInputPassword1" value="<%=user.client.phone%>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">电子邮件</label>
+            <input type="text" name="email" class="form-control" id="exampleInputPassword1" value="<%=user.email%>">
+          </div>
+          <div class="form-group">
+            <label>备注</label>
+            <textarea style="text-align:left"  name="remarks" id="remarks" class="form-control">
+            </textarea>
+          </div>
+          <button type="submit" class="btn btn-default">提交</button>
+        </form>
+
+      </div>
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script 
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="/js/series.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+
+<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $(".fancybox").fancybox({
+            maxWidth	: 800,
+            maxHeight	: 600,
+            fitToView	: false,
+            width		: '70%',
+            height		: '70%',
+            autoSize	: false,
+            closeClick	: false,
+            openEffect	: 'none',
+            closeEffect	: 'none'
+        });
+        populateCity();
+        populateRegion();
+        populateStreet();
+        
+        
+        
+        
+    });
+        
+    $("#topup").hide();
+    $("#message").hide();
+        function populateCity(){
+        var selectedState = $("#state option:selected").text();
+        if(selectedState=="" || selectedState=="所有省")
+            $("#city").append("<option value=''>所有城市</option>");
+            
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+          $("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+        }
+        function populateRegion(){
+        var selectedState = $("#state option:selected").text();
+        var selectedCity = $("#city option:selected").text();
+        if(selectedCity=="所有城市"||selectedCity==""){
+            $("#region").append("<option value=''>所有地区</option>");
+        }
+        $.ajax({
+        url: "/geo/region?state="+selectedState+"&city="+selectedCity,
+        }).done(function(data){
+          //alert(data);
+          $("#region").append("<option value=''>所有地区</option>");
+          html = "";
+          while (data.length) {
+            var region = data.pop();
+            option = "<option value='"+region+"'>"+region+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#region").append(html);
+          });
+        }
+            
+        function populateStreet(){
+            var selectedState = $("#state option:selected").text();
+            var selectedCity = $("#city option:selected").text();
+            var selectedRegion = $("#region option:selected").text();
+            if(selectedRegion=="所有地区"||selectedRegion=="")
+                $("#street").append("<option value=''>所有街道</option>");;
+            
+            $.ajax({
+            url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+            }).done(function(data){
+              //alert(data);
+              $("#street").append("<option value=''>所有街道</option>");
+              html = "";
+              while (data.length) {
+                var street = data.pop();
+                option = "<option value='"+street+"'>"+street+"</option>";
+                html = html + option;
+                //code
+              }
+              $("#street").append(html);
+            });
+        }
+            
+    
+        $("#state").change(function(){
+            $("#city").empty();
+            $("#region").empty();
+            $("#region").append("<option value=''>所有地区</option>");
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateCity();
+        });
+        $("#city").change(function(){
+            $("#region").empty();
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateRegion();
+        });
+        $("#region").change(function(){
+            $("#street").empty();
+            populateStreet();
+        });
+        
+        s = new Series().y(function(d){return d.sum});
+        <%
+            if(access!=null)
+            while(access.length){
+                result = access.pop();
+                item = {};
+                var createdAt = result.createdAt;
+                var time = createdAt.toString().split(" ");
+                item.time = result.createdAt;
+                item.sum = 1;
+        %>
+            
+            s.put({time: "<%=item.time%>", sum: <%=item.sum%>});
+        <%
+            }
+        
+        %>
+            var aggreData = [];
+            if(s.length!=0){
+                    aggreData = Series.y(function(d){ return d.sum; })
+                    .aggregation(Series.sum)
+                    .key(function(d){ 
+                      var createdAt = d.time;
+                      key = moment(createdAt).format("MM-DD");
+                      return key })(s);
+                }
+                
+            dataAccess = Series.range(0, 8).map(function(d){
+                var v;
+                var fromDate = moment(new Date()).subtract(7, "days");
+                var date_i = moment(fromDate).add(d, "days");
+                for(var i=0; i<aggreData.length; i++) {   
+
+                if(aggreData[i].t==(date_i.format("MM-DD"))){
+                    v = aggreData[i].y;
+                    break;
+                }
+                else
+                   v = 0;
+                }
+                return {
+                v: v,
+                t: date_i.format("MM-DD")
+                }}
+                )
+
+            var y = [], t = [];
+            dataAccess.forEach(function(d){
+            y.push(d.v);t.push(d.t);});
+            
+            data2 = {
+                    labels: t,
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: y
+                        }
+                    ]
+                };
+                var myLineChart;
+            var ctx = document.getElementById("access-ctx").getContext("2d");
+                myLineChart = new Chart(ctx).Line(data2, {
+                bezierCurve: false
+            });
+            
+            var dataPrize = new Series().y(function(d){return d.sum});
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        </script>
+      
+

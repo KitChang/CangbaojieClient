@@ -1,0 +1,260 @@
+<link href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
+    
+      <div class="container">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                              <li>获奖人</a></li>
+                </ol>      
+                    
+                <div class="panel-body ">
+                    <form class="form-inline" action="/prize-winner/search" method="get">
+                        <div class="form-group">
+                        <label>广告</label>
+                        <select class="form-control" name="advertisement">
+                            <option value="">所有广告</option>
+                            <%
+                            if(ads!=null){
+                                var ad;
+                                while(ads.length){
+                                    ad = ads.pop();
+                            
+                                    if(ad.id==adSelected){
+                                    %>
+                                        <option value="<%=ad.id%>" selected><%=ad.title%></option>
+                                    <%
+                                    }else{
+                                    %>
+                                        <option value="<%=ad.id%>"><%=ad.title%></option>
+                                    <%
+                                    }
+                                }
+                            }
+                            %>
+                        </select>
+                        </div>
+                        <div class="form-group">
+                        <label>等奖</label>
+                        <select class="form-control" name="prize" >
+                            <%
+                            if(prize){
+                                var optionHtml = "jljkljj";
+                                var prizeValArr = ["1", "2", "3", "4", "5", "all"];
+                                var prizeStrArr = ["一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "所有奖"];
+                                for(var i=0; i<prizeValArr.length; i++){
+                                    
+                                    if(prize==prizeValArr[i]){
+                            %>
+                            <option value="<%=prizeValArr[i]%>" selected><%=prizeStrArr[i]%></option>
+                            <%          
+                                    }else{
+                            %>
+                                        <option value="<%=prizeValArr[i]%>"><%=prizeStrArr[i]%></option>
+                            <%
+                                    }
+                                }
+                            %>
+                            <%
+                            }else{
+                            %>
+                            <option value="all">所有奖</option>
+                            <option value="1">一等奖</option>
+                            <option value="2">二等奖</option>
+                            <option value="3">三等奖</option>
+                            <option value="4">四等奖</option>
+                            <option value="5">五等奖</option>
+                            
+                            <%
+                            }
+                            %>
+                            
+                        </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="state" name="state">
+                                <%
+                                if(req.param("state")&&req.param("state")!=""){
+                                %>
+                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
+
+                                <%
+                                }
+                                %>
+                                
+                                <option value="广东省">广东省</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="city" name="city">
+                                <%
+                                if(req.param("city")&&req.param("city")!=""){
+                                %>
+                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region" name="region">
+                                <%
+                                if(req.param("region")&&req.param("region")!=""){
+                                %>
+                                <option value="<%=req.param('region')%>" selected><%=req.param('region')%></option>
+                                <%
+                                }
+                                %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="street" name="street">
+                                 <%
+                                if(req.param("street")&&req.param("street")!=""){
+                                %>
+                                <option value="<%=req.param('street')%>" selected><%=req.param('street')%></option>
+                                <%
+                                }
+                                %>
+                               
+                            </select>
+                        </div>
+                        <button class="btn btn-default">搜</button>
+                    </form>
+                    
+                    
+                </div>
+                <div class="panel-body">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>日期</th><th>用户名</th><th>用户联系</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    if(results!=null)
+                    while(results.length){
+                        var row = results.pop();
+                        var date = row.createdAt;
+                        var date2 = moment(date).startOf('day').format("YYYY-MM-DD");
+                        phone = row.appUser.phone;
+                        phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
+                    %>
+                    <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>
+                    <%
+                    }
+                    %>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>
+    <script>
+        $(document).ready(function(){
+            populateCity();
+            populateRegion();
+            populateStreet();
+            
+        });
+        function populateCity(){
+        var selectedState = $("#state option:selected").text();
+            
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+          $("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+        }
+        function populateRegion(){
+        var selectedState = $("#state option:selected").text();
+        var selectedCity = $("#city option:selected").text();
+        if(selectedCity=="所有城市"||selectedCity==""){
+            $("#region").append("<option value=''>所有地区</option>");
+        }
+        $.ajax({
+        url: "/geo/region?state="+selectedState+"&city="+selectedCity,
+        }).done(function(data){
+          //alert(data);
+          $("#region").append("<option value=''>所有地区</option>");
+          html = "";
+          while (data.length) {
+            var region = data.pop();
+            option = "<option value='"+region+"'>"+region+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#region").append(html);
+          });
+        }
+            
+        function populateStreet(){
+            var selectedState = $("#state option:selected").text();
+            var selectedCity = $("#city option:selected").text();
+            var selectedRegion = $("#region option:selected").text();
+            if(selectedRegion=="所有地区"||selectedRegion=="")
+                $("#street").append("<option value=''>所有街道</option>");;
+            
+            $.ajax({
+            url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+            }).done(function(data){
+              //alert(data);
+              $("#street").append("<option value=''>所有街道</option>");
+              html = "";
+              while (data.length) {
+                var street = data.pop();
+                option = "<option value='"+street+"'>"+street+"</option>";
+                html = html + option;
+                //code
+              }
+              $("#street").append(html);
+            });
+        }
+            
+    
+        $("#state").change(function(){
+            $("#city").empty();
+            $("#region").empty();
+            $("#region").append("<option value=''>所有地区</option>");
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateCity();
+        });
+        $("#city").change(function(){
+            $("#region").empty();
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateRegion();
+        });
+        $("#region").change(function(){
+            $("#street").empty();
+            populateStreet();
+        });
+
+    </script>
+
+    
+      
+

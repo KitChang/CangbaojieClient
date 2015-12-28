@@ -1,0 +1,154 @@
+
+    
+      <div class="container">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                          <li>奖项统计</a></li>
+                </ol>      
+                <div class="panel-body">
+                    <form class="form-inline" action="/prize-stock/search" method="get">
+                        <div class="form-group">
+                        <label>广告</label>
+                        <select class="form-control" name="advertisement">
+                            <%
+                            if(ads!=null){
+                                var ad;
+                                while(ads.length){
+                                    ad = ads.pop();
+                                if(selectedAd&&ad.id==selectedAd.id){
+                            %>
+                            <option value="<%=ad.id%>" selected><%=ad.title%></option>
+                            <%
+                                    
+                                }else{
+                            %>
+                            <option value="<%=ad.id%>"><%=ad.title%></option>
+                            <%
+                                    
+                                }
+                                }
+                            }
+                            %>
+                        </select>
+                        </div>
+                        <button class="btn btn-default">搜</button>
+                    </form>
+                    
+                </div>
+                <form name="form" action="/dfd/" method="post">
+            
+                <div class="panel-body">
+                <table class="table table-striped" id="prize-stock-table">
+                    <thead>
+                    <tr><th>奖项</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
+                    </thead>
+                    <tbody>
+                    <%
+                        if(selectedAd){
+                    %>
+                        <tr>
+                        <td><%=selectedAd.firstPrize%></td><td><%=selectedAd.firstPrizeQuantity%></td>
+                        <td>
+                        <%
+                            var drawnPrizeQuantity = selectedAd.firstPrizeQuantity - selectedAd.firstPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.firstPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem1PrizeQuantity%></td>
+                        <td>
+                        <%
+                            var notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem1PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><%=selectedAd.secondPrize%></td><td><%=selectedAd.secondPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.secondPrizeQuantity - selectedAd.secondPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.secondPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem2PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem2PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><%=selectedAd.thirdPrize%></td><td><%=selectedAd.thirdPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.thirdPrizeQuantity - selectedAd.thirdPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        
+                        </td>
+                        <td><%=selectedAd.thirdPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem3PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem3PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><%=selectedAd.fourthPrize%></td><td><%=selectedAd.fourthPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.fourthPrizeQuantity - selectedAd.fourthPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.fourthPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem4PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem4PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><%=selectedAd.fifthPrize%></td><td><%=selectedAd.fifthPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.fifthPrizeQuantity - selectedAd.fifthPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.fifthPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem5PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem5PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    
+                    <%
+                            
+                        }
+                    %>
+                    
+                    </tbody>
+                </table>
+                </div>
+                </form>
+
+            </div>
+        </div>
+        <footer class="footer">
+        <p>&copy; Company 2015</p>
+        </footer>
+      </div>
+    
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    
+      
+

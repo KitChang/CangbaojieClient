@@ -1,0 +1,117 @@
+
+  <body>
+    
+      <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">行业比较</div>
+                <div class="panel-body">
+                    <form class="form-inline" method="get" action="/business-comparison/search">
+                        <div class="form-group">
+                            <label>省</label>
+                            <select class="form-control" id="state" name="state">
+                                <option value="">所有省</option>
+                                <option value="广西">广西</option>
+                                <option value="广东">广东</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>城市</label>
+                            <select class="form-control" id="city" name="city">
+                                <option value="">所有城市</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>行业</label>
+                            <select class="form-control" id="city" name="category">
+                                <option value="">所有行业</option>
+                                <option value="地产">地产</option>
+                                <option value="餐饮">餐饮</option>
+                                <option value="汽车">汽车</option>
+                                <option value="娱乐">娱乐</option>
+                                <option value="金融">金融</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>日期从</label>
+                            <input type="text" class="form-control" name="date-from" id="date-from">
+                        </div>
+                        <div class="form-group">
+                            <label>至</label>
+                            <input type="text" class="form-control" name="date-to" id="date-to">
+                        </div>
+                        <button class="btn btn-default">搜</button>
+                    </form>
+                </div>
+                <table class="table table-strip" id="clickTable">
+                <tr><th>广告商家</th><th>点击量</th></tr>
+                </table>
+            </div>
+        </div>
+        <footer class="footer">
+        <p>&copy; Company 2015</p>
+        </footer>
+      </div>
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script>
+        $("#date-from").daterangepicker({singleDatePicker: true});
+        $("#date-to").daterangepicker({singleDatePicker: true});
+        $("#state").change(function(){
+        var selectedState = $("#state option:selected").text();
+        $("#city").empty();
+        $("#region").empty();
+        $.ajax({
+        url: "/geo/city/"+selectedState
+        }).done(function(data){
+          $("#city").empty();
+          $("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+          }
+          $("#city").append(html);
+          });
+        });
+        
+        s = new Series().y(function(d){return d.sum});
+        <%
+            if(results!=null)
+            while(results.length){
+                result = results.pop();
+                item = {};
+                //var createdAt = result.createdAt;
+                //var time = createdAt.toString().split(" ");
+                item.company = result.advertising_company.name;
+                item.sum = 1;
+        %>
+            s.put({company: "<%=item.company%>", sum: <%=item.sum%>});
+        <%
+            }
+        
+        %>
+        var data_sum = Series.y(function(d){ return d.sum;})
+                .aggregation(Series.sum)
+                .key(function(d){ 
+                var key = d.company;
+                return key })(s);
+        var html, trHtml;
+        while(data_sum.length){
+            data_sum_i = data_sum.pop();
+            trHtml = "<tr><td>"+data_sum_i.t+"</td><td>"+data_sum_i.y+"</td></tr>"
+            html += trHtml;
+        }
+        $("#clickTable").append(html);
+        
+        //alert(data_sum.length);
+        
+        
+    </script>
+
