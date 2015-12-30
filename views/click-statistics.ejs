@@ -153,8 +153,9 @@
                             var date = row.createdAt;
                             var date2 = moment(date).startOf('day');
                             date2 = date2.format('YYYY-MM-DD');
-                            phone = row.appUser.phone;
-                            phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
+                            phone = "";
+                            //phone = row.appUser.phone;
+                            //phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
                             
                 %>
                 <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>

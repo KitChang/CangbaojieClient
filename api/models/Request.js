@@ -8,9 +8,12 @@
 module.exports = {
   identity: 'request',
   attributes: {
-      advertisement: {model: 'advertisement'},
       client: {model: 'client'},
-      status: {type: 'string', enum: ['未审查', '处理中', '完成'], defaultsTo: '未审查', required: true}
+      status: {type: 'string', enum: ['open', 'process', 'closed'], defaultsTo: 'open', required: true},
+      state: {type: 'string', defaultsTo: ''},
+      city: {type: 'string', defaultsTo: ''},
+      region: {type: 'string', defaultsTo: ''},
+      street: {type: 'string', defaultsTo: ''}
   }
 };
 

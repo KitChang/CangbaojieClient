@@ -17,7 +17,7 @@
                 <div class="panel panel-white no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要充值</h2>
-                    <p class="text-small">账户:  <%=user.client.name%>, 余额:  $<%=client.account%> </p>
+                    <p class="text-small">账户:  <%=user.client.name%>, 余额:  $<%=client.account.toFixed(2)%> </p>
                     <p class="links cl-effect-1">
                         <a href="#topup" class="fancybox button button-glow button-border button-rounded button-primary">充值</a>
                     </p>

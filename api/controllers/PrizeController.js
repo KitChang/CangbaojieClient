@@ -7,14 +7,26 @@
 var moment = require("moment");
 module.exports = {
 	prizeStock: function(req, res){
-        advertisement.find().exec(function(err, ads){
+        var Session = require("../lib/session");
+        var session = new Session(req.session);
+        var user = session.user();
+        if(!user){
+            return res.serverError();
+        }
+        advertisement.find({client: user.client.id}).exec(function(err, ads){
             res.view('prize-stock', {ads: ads, selectedAd: null});
         });
         
     },
     prizeStockSearch: function(req, res){
         var addId = req.param('advertisement');
-        advertisement.find().exec(function(err, ads){
+        var Session = require("../lib/session");
+        var session = new Session(req.session);
+        var user = session.user();
+        if(!user){
+            return res.serverError();
+        }
+        advertisement.find({client: user.client.id}).exec(function(err, ads){
             advertisement.findOne({id: addId}).exec(function(err, ad){
                 res.view('prize-stock', {ads: ads, selectedAd: ad});
             })
