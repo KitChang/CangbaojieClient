@@ -10,30 +10,29 @@ moment.locale('zh-cn');
 module.exports = {
 	dashboard: function(req, res){
         var Session = require("../lib/session");
-            var session = new Session(req.session);
-            var user = session.user();
+        var session = new Session(req.session);
+        var user = session.user();
+        if(!user){
+            return res.serverError();
+        }
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
-            
             advertisement.find({client: user.client.id}).exec(function(err, ads){
-            var Session = require("../lib/session");
-            var session = new Session(req.session);
-            var user = session.user();
-            var dateTo = moment(new Date()).endOf('day');
-            var dateFrom = moment(dateTo).subtract(7, "days");
-            var todayStart = moment(new Date).startOf('day');
-            var todayEnd = moment(new Date).endOf('day');
+            var dateTo = moment().endOf('day').toDate();
+            var dateFrom = moment().subtract(7, "days").startOf('day').toDate();
+            var todayStart = moment().startOf('day').toDate();
+            var todayEnd = moment().endOf('day').toDate();
             option = {};
             //option.client = user.client.id;
-            access.find({client: user.client.id}).where({ "createdAt" : { ">" : new Date(dateFrom), "<" : new Date(dateTo) }}).exec(function(err, accessResults){
-                console.log(accessResults.length);
-                access.find(option).where({ "createdAt" : { ">" : new Date(todayStart), "<" : new Date(todayEnd) }}).exec(function(err, accessToday){
-                    var accessToday2 = 0; totalAccess = 0;
+            access.find({client: user.client.id}).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){
+                
+                access.find(option).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
+                    var accessCountToday = 0; totalAccess = 0;
                     if(accessToday)
-                        accessToday2 = accessToday.length;
+                        accessCountToday = accessToday.length;
                     if(accessResults)
                         totalAccess = accessResults.length;
                     ClientMessage.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, clientMessages){
-                        res.view('dashboard', {ads: ads, selectedAd: null, access: accessResults,moment: moment, accessToday: accessToday2, totalAccess: totalAccess, user: user, clientMessages: clientMessages, client: clientOne});
+                        res.view('dashboard', {ads: ads, selectedAd: null, access: accessResults,moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, user: user, clientMessages: clientMessages, client: clientOne});
                     });
                         
                 });
@@ -53,11 +52,11 @@ module.exports = {
         
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
             advertisement.find({client: user.client.id}).exec(function(err, ads){
-                var dateTo = moment(new Date());
-                var dateFrom = moment(dateTo).subtract(7, "days");
+                var dateTo = moment().endOf('day').toDate();
+                var dateFrom = moment().subtract(7, "days").startOf('day').toDate();
                 var advertisementId = req.param('advertisement');
-                var todayStart = moment(new Date).startOf('day');
-                var todayEnd = moment(new Date).endOf('day');
+                var todayStart = moment().startOf('day').toDate();
+                var todayEnd = moment().endOf('day').toDate();
                 var locationType = req.param('locationType');
                 var state = req.param('state');
                 var city = req.param('city');
@@ -82,26 +81,19 @@ module.exports = {
                 if(advertisementId!=""){
                     option.advertisement = advertisementId;
                 }
-    //            else{
-    //                var adId = [];
-    //                for(var i=0; i<ads.length; i++){
-    //                    adId.push(ads[i].id);
-    //                }
-    //                option.advertisement = adId;
-    //            }
                 option.client = user.client.id;
-                access.find(option).where({ "createdAt" : { ">" : new Date(dateFrom), "<" : new Date(dateTo) }}).exec(function(err, accessResults){
-                access.find(option).where({ "createdAt" : { ">" : new Date(todayStart), "<" : new Date(todayEnd) }}).exec(function(err, accessToday){
-                    var accessToday2 = 0; totalAccess = 0;
+                access.find(option).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){
+                access.find(option).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
+                    var accessCountToday = 0; totalAccess = 0;
                     if(accessToday)
-                        accessToday2 = accessToday.length;
+                        accessCountToday = accessToday.length;
                     if(accessResults)
                         totalAccess = accessResults.length;
                     if(advertisementId == "")
                         advertisementId = "-1";
                      advertisement.findOne({id: advertisementId}).exec(function(err, ad){
                         ClientMessage.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, clientMessages){
-                        res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessToday2, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});    
+                        res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});    
                         });
 
                     });
