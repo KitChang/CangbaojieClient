@@ -83,7 +83,7 @@ module.exports = {
                     option.advertisement = advertisementId;
                 }
                 if(locationType&&locationType!=""){
-                    option.locatioType = locationType;
+                    option.locationType = locationType;
                 }
                 option.client = user.client.id;
                 access.find(option).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){
