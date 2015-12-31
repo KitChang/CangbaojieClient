@@ -52,6 +52,7 @@ module.exports = {
         
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
             advertisement.find({client: user.client.id}).exec(function(err, ads){
+                var locationType = req.param('locationType');
                 var dateTo = moment().endOf('day').toDate();
                 var dateFrom = moment().subtract(7, "days").startOf('day').toDate();
                 var advertisementId = req.param('advertisement');
@@ -80,6 +81,9 @@ module.exports = {
                 }
                 if(advertisementId!=""){
                     option.advertisement = advertisementId;
+                }
+                if(locationType&&locationType!=""){
+                    option.locatioType = locationType;
                 }
                 option.client = user.client.id;
                 access.find(option).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){

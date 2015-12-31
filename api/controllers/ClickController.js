@@ -11,11 +11,10 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         advertisement.find({client: user.client.id}).exec(function(err, ads){
-            var dateTo = moment(new Date());
-            console.log("today"+dateTo.toString());
-            var dateFrom = moment(dateTo).subtract(7, "days");
+            var dateTo = moment().toDate();
+            var dateFrom = moment(dateTo).subtract(7, "days").startOf('day').toDate();
             option = {client: user.client.id};
-            access.find(option).where({ "createdAt" : { ">" : new Date(dateFrom), "<" : new Date(dateTo) }}).populate("appUser").exec(function(err, results){
+            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
         })
