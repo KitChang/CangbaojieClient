@@ -102,13 +102,13 @@
                             </select>
                         </div>
 
-                        <div class="form-group" id="dateFrom">
+                        <div class="form-group" id="dateFromDiv">
                         <label>日期从</label>
-                        <input type="text" class="form-control" name="dateFrom">
+                        <input type="text" class="form-control" name="dateFrom" id="dateFrom">
                         </div>
-                        <div class="form-group" id="dateTo">
+                        <div class="form-group" id="dateToDiv">
                         <label>至</label>
-                        <input type="text" class="form-control" name="dateTo">
+                        <input type="text" class="form-control" name="dateTo" id="dateTo">
                         </div>
                         </div>
                         <div class="form-group">
@@ -288,15 +288,15 @@
             populateStreet();
         });
             
-            $("#dateFrom").hide();
-            $("#dateTo").hide();
+            $("#dateFromDiv").hide();
+            $("#dateToDiv").hide();
             $("#duration").change(function(){
                 if($("#duration").val()=="define"){
-                    $("#dateFrom").show();
-                    $("#dateTo").show();
+                    $("#dateFromDiv").show();
+                    $("#dateToDiv").show();
                 }else{
-                    $("#dateFrom").hide();
-                    $("#dateTo").hide();
+                    $("#dateFromDiv").hide();
+                    $("#dateToDiv").hide();
                 }
             })
         </script>
