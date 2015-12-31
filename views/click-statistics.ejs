@@ -104,11 +104,34 @@
 
                         <div class="form-group" id="dateFromDiv">
                         <label>日期从</label>
-                        <input type="text" class="form-control" name="dateFrom" id="dateFrom">
+                        <%
+                            if(req.param('dateFrom')){
+                        %>
+                            <input type="text" class="form-control" name="dateFrom" id="dateFrom" value="<%=req.param('dateFrom')%>">
+                        <%
+                            }
+                            else{
+                        %>
+                            <input type="text" class="form-control" name="dateFrom" id="dateFrom">
+                        <%
+                            }
+                        %>
+                        
                         </div>
                         <div class="form-group" id="dateToDiv">
                         <label>至</label>
-                        <input type="text" class="form-control" name="dateTo" id="dateTo">
+                        <%
+                            if(req.param('dateTo')){
+                        %>
+                            <input type="text" class="form-control" name="dateTo" id="dateTo" value="<%=req.param('dateTo')%>">
+                        <%
+                            }
+                            else{
+                        %>
+                            <input type="text" class="form-control" name="dateTo" id="dateTo">
+                        <%
+                            }
+                        %>
                         </div>
                         </div>
                         <div class="form-group">
@@ -287,9 +310,11 @@
             $("#street").empty();
             populateStreet();
         });
+            if($("#duration").val()!="define"){
+                $("#dateFromDiv").hide();
+                $("#dateToDiv").hide();
+            }
             
-            $("#dateFromDiv").hide();
-            $("#dateToDiv").hide();
             $("#duration").change(function(){
                 if($("#duration").val()=="define"){
                     $("#dateFromDiv").show();

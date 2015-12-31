@@ -30,12 +30,14 @@ module.exports = {
             if(duration=="define"){
                 var dateFromStr = req.param('dateFrom');
                 var dateToStr = req.param('dateTo');
-                if(dateFromStr!=null)
+                /*
+                if(dateFromStr)
                     dateFromStr = dateFromStr.replace(/\//g, "");
                 if(dateToStr)
                     dateToStr = dateToStr.replace(/\//g, "");
-                dateFrom = moment(dateFromStr, "MMDDYYYY").startOf('day').toDate();
-                dateTo = moment(dateToStr, "MMDDYYYY").endOf('day').toDate();
+                */
+                dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+                dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
             }else{
                 var dateTo = moment().toDate();
                 duration = parseInt(duration);
