@@ -22,7 +22,7 @@ module.exports = {
         var email = req.param('email');
         var remarks = req.param('remarks');
         TopupRequest.create({user: user.id, client: clientId, topupValue: topupValue, name: name, contactPhone: contactPhone, email: email, remarks: remarks}).exec(function(err){
-            var messageStr = name+" 充值"+topupValue;
+            var messageStr = "用户"+user.username+"充值请求已发车－充值:"+topupValue+"元";
             ClientMessage.create({client: clientId, message: messageStr}).exec(function(){
                 
                 res.redirect('/?message=OK');

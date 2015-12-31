@@ -27,7 +27,10 @@ module.exports = {
         var title = req.param('title');
         var message2 = req.param('message');
         message.create({user: user.id, client: clientId, name: name, contactPhone: contactPhone, email: email, title: title, message: message2}).exec(function(err){
-            res.redirect('/?message=OK');
+            var messageStr = "用户"+user.username+"留言已发出-标题:"+title;
+            ClientMessage.create({client: clientId, message: messageStr}).exec(function(){
+                res.redirect('/?message=OK');
+            });
         });
         
         
