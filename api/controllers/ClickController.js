@@ -34,15 +34,15 @@ module.exports = {
                     dateFromStr = dateFromStr.replace(/\//g, "");
                 if(dateToStr)
                     dateToStr = dateToStr.replace(/\//g, "");
-                dateFrom = moment(dateFromStr, "MMDDYYYY").startOf('day');
-                console.log("date from"+dateFrom);
-                dateTo = moment(dateToStr, "MMDDYYYY").endOf('day');
+                dateFrom = moment(dateFromStr, "MMDDYYYY").startOf('day').toDate();
+                dateTo = moment(dateToStr, "MMDDYYYY").endOf('day').toDate();
             }else{
-                var dateTo = moment(new Date());
+                var dateTo = moment().toDate();
                 duration = parseInt(duration);
-                console.log("dru"+duration);
-                var dateFrom = moment(dateTo).subtract(duration, "days");
-                console.log("datefr"+dateFrom);
+                if(duration==NaN)
+                    duration = 0;
+                var dateFrom = moment().subtract(duration, "days").toDate();
+                
             }
             
             var locationType = req.param('locationType');
@@ -78,7 +78,7 @@ module.exports = {
             if(street&&street!=""){
                 option.street = street;
             }
-            access.find(option).where({ "createdAt" : { ">" : new Date(dateFrom), "<" : new Date(dateTo) }}).populate("appUser").exec(function(err, results){
+            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
             
