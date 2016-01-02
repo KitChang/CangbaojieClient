@@ -135,7 +135,7 @@
                     while(results.length){
                         var row = results.pop();
                         var date = row.createdAt;
-                        var date2 = moment(date).startOf('day').format("YYYY-MM-DD");
+                        var date2 = moment(date).format("YYYY-MM-DD HH:mm:ss");
                         phone = row.appUser.phone;
                         phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
                     %>
