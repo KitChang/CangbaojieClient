@@ -41,14 +41,14 @@
                 <div class="panel-body">
                 <table class="table table-striped" id="prize-stock-table">
                     <thead>
-                    <tr><th>奖项</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
+                    <tr><th></th><th>奖项</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
                     </thead>
                     <tbody>
                     <%
                         if(selectedAd){
                     %>
                         <tr>
-                        <td><%=selectedAd.firstPrize%></td><td><%=selectedAd.firstPrizeQuantity%></td>
+                        <td><b>一等奖</b></td><td><%=selectedAd.firstPrize%></td><td><%=selectedAd.firstPrizeQuantity%></td>
                         <td>
                         <%
                             var drawnPrizeQuantity = selectedAd.firstPrizeQuantity - selectedAd.firstPrizeQuantityRemain;
@@ -64,7 +64,7 @@
                             <%=notRedeemPrizeQuantity%>
                         </td></tr>
                     <tr>
-                        <td><%=selectedAd.secondPrize%></td><td><%=selectedAd.secondPrizeQuantity%></td>
+                        <td><b>二等奖</b></td><td><%=selectedAd.secondPrize%></td><td><%=selectedAd.secondPrizeQuantity%></td>
                         <td>
                         <%
                             drawnPrizeQuantity = selectedAd.secondPrizeQuantity - selectedAd.secondPrizeQuantityRemain;
@@ -80,7 +80,7 @@
                             <%=notRedeemPrizeQuantity%>
                         </td></tr>
                     <tr>
-                        <td><%=selectedAd.thirdPrize%></td><td><%=selectedAd.thirdPrizeQuantity%></td>
+                        <td><b>三等奖</b></td><td><%=selectedAd.thirdPrize%></td><td><%=selectedAd.thirdPrizeQuantity%></td>
                         <td>
                         <%
                             drawnPrizeQuantity = selectedAd.thirdPrizeQuantity - selectedAd.thirdPrizeQuantityRemain;
@@ -97,7 +97,7 @@
                             <%=notRedeemPrizeQuantity%>
                         </td></tr>
                     <tr>
-                        <td><%=selectedAd.fourthPrize%></td><td><%=selectedAd.fourthPrizeQuantity%></td>
+                        <td><b>四等奖</b></td><td><%=selectedAd.fourthPrize%></td><td><%=selectedAd.fourthPrizeQuantity%></td>
                         <td>
                         <%
                             drawnPrizeQuantity = selectedAd.fourthPrizeQuantity - selectedAd.fourthPrizeQuantityRemain;
@@ -113,7 +113,7 @@
                             <%=notRedeemPrizeQuantity%>
                         </td></tr>
                     <tr>
-                        <td><%=selectedAd.fifthPrize%></td><td><%=selectedAd.fifthPrizeQuantity%></td>
+                        <td><b>五等奖</b></td><td><%=selectedAd.fifthPrize%></td><td><%=selectedAd.fifthPrizeQuantity%></td>
                         <td>
                         <%
                             drawnPrizeQuantity = selectedAd.fifthPrizeQuantity - selectedAd.fifthPrizeQuantityRemain;

@@ -174,9 +174,15 @@
                             var date = row.createdAt;
                             var date2 = moment(date);
                             date2 = date2.format('YYYY-MM-DD HH:mm:ss');
-                            phone = "";
-                            phone = row.appUser.phone;
-                            phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
+                            if (row.appUser.authType == "local") {
+                                phone = "";
+                                phone = row.appUser.phone;
+                                phone = phone.substr(0, 4) + "****"+phone.substr(8) ;
+                            }
+                            else {
+                                phone = "wechat用戶";
+                            }
+                            
                             
                 %>
                 <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>
