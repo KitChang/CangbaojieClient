@@ -92,6 +92,7 @@ module.exports = {
             if(street&&street!=""){
                 option.street = street;
             }
+            option.sort = 'createdAt DESC';
             
             PrizeCoupon.find(option).populate('appUser').exec(function(err, results){
 

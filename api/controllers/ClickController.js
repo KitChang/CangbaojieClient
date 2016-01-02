@@ -14,7 +14,7 @@ module.exports = {
             var dateTo = moment().toDate();
             var dateFrom = moment(dateTo).subtract(7, "days").startOf('day').toDate();
             option = {client: user.client.id};
-            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).populate("appUser").exec(function(err, results){
+            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc' }).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
         })
@@ -79,7 +79,7 @@ module.exports = {
             if(street&&street!=""){
                 option.street = street;
             }
-            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).populate("appUser").exec(function(err, results){
+            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc'}).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
             
