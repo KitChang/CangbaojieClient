@@ -68,7 +68,7 @@ module.exports.routes = {
       controller: 'User_clientController',
       action: 'login'
   },
-  'post /logout': {
+  'get /logout': {
       controller: 'User_clientController',
       action: 'logout'
   },
