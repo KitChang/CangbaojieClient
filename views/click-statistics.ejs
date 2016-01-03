@@ -8,8 +8,9 @@
                     
                 <div class="panel-body">
                     <form class="form-inline" action="/click-statistics/search" method="get">
-                        <div class="panel-elem">
+                        
                         <div class="form-group">
+                             <label>推广途径</label>
                             <select class="form-control" id="type" name="locationType">
                                 <%
                                 if(req.param("locationType")&&req.param("locationType")!=""){
@@ -26,6 +27,7 @@
                             </select>
                         </div>
                         <div class="form-group">
+                             <label>位置</label>
                             <select class="form-control" id="state" name="state">
                                 <%
                                 if(req.param("state")&&req.param("state")!=""){
@@ -74,7 +76,7 @@
                                 %>
                                 
                             </select>
-                        </div>
+                        </div><br/><br/>  
                         <div class="form-group">
                             <label>时间</label>
                             <select class="form-control" id="duration" name="duration">
@@ -131,7 +133,7 @@
                             }
                         %>
                         </div>
-                        </div>
+                        </br></br>
                         <div class="form-group">
                         <label>广告</label>
                         <select class="form-control" name="advertisement">
@@ -155,7 +157,7 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-default">搜索</button>
+                        <button class="btn btn-warning">搜索</button>
                         
                     </form>
                     
