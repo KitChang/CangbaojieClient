@@ -6,33 +6,35 @@
                         <li>创建推广</li>
                     </ol>  
                     <div class="panel-body">
-                        <form id="form" name="form" action="/request" method="post"> 
+                        <form class="form-inline" id="form" name="form" action="/request" method="post"> 
                         <div class="form-group">
                             <select class="form-control" id="state" name="state">
-                                <option value="所有省">所有省</option>
-                                <option value="广西">广西省</option>
-                                <option value="广东">广东省</option>
+                                
+                                <option value="广东省">广东省</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="city" name="city">
-                                <option value="所有城市">所有城市</option>
+                                <option value="">请选城市</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="region" name="region">
-                                <option value="所有地区">所有地区</option>
+                                <option value="">请选地区</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="street" name="street">
-                                <option value="所有街道">所有街道</option>
+                                <option value="">请选街道</option>
                             </select>
                         </div>
-                        </form>
+
                         <input type="hidden" name="client" value="<%=req.param('client')%>">
-                        <input type="button" class="btn btn-default" value="推广" onClick="javascript:document.form.submit();"/>
-                        <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>  
+                        <input type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value="取消"/> 
+                        <input type="button" class="btn btn-primary right" value="推广" onClick="javascript:document.form.submit();"/>
+                         
+                        </form>
+                        
                     </div>
                 </div>              
         </div>
@@ -41,17 +43,40 @@
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
-    $("#state").change(function(){
+    $(document).ready(function(){
         var selectedState = $("#state option:selected").text();
         $("#region").empty();
-        $("#region").append("<option value='所有地区'>所有地区</option>");  
+        $("#region").append("<option value=''>请选地区</option>");  
         $("#street").empty();
-        $("#street").append("<option value='所有街道'>所有街道</option>");  
+        $("#street").append("<option value=''>请选街道</option>");  
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
           $("#city").empty();
-          $("#city").append("<option value=''>所有城市</option>");
+          $("#city").append("<option value=''>请选城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+            
+            
+        });
+    $("#state").change(function(){
+        var selectedState = $("#state option:selected").text();
+        $("#region").empty();
+        $("#region").append("<option value=''>请选地区</option>");  
+        $("#street").empty();
+        $("#street").append("<option value=''>请选街道</option>");  
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+          $("#city").empty();
+          $("#city").append("<option value=''>请选城市</option>");
           html = "";
           while (data.length) {
             var city = data.pop();
@@ -68,14 +93,14 @@
         var selectedCity = $("#city option:selected").text();
         $("#region").empty();
         $("#street").empty();
-        $("#street").append("<option value='所有街道'>所有街道</option>");  
+        $("#street").append("<option value=''>请选街道</option>");  
         
         $.ajax({
         url: "/geo/region?state="+selectedState+"&city="+selectedCity,
         }).done(function(data){
           //alert(data);
           $("#region").empty();
-          $("#region").append("<option value=''>所有地区</option>");
+          $("#region").append("<option value=''>请选地区</option>");
           html = "";
           while (data.length) {
             var region = data.pop();
@@ -97,7 +122,7 @@
         }).done(function(data){
           //alert(data);
           $("#street").empty();
-          $("#street").append("<option value=''>所有街道</option>");
+          $("#street").append("<option value=''>请选街道</option>");
           html = "";
           while (data.length) {
             var area = data.pop();
@@ -108,5 +133,7 @@
           $("#street").append(html);
         });
       });
+    
+            
     </script>
 
