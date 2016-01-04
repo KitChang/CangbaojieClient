@@ -165,7 +165,7 @@
                 <div class="panel-body">
                 <table class="table table-striped" id="table">
                 <thead>
-                    <tr><th>日期</th><th>用户名</th><th>联系电话</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
+                    <tr><th id="sortDate">日期</th><th>用户名</th><th>联系电话</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
                 </thead>
                 <tbody>
                 
@@ -230,6 +230,7 @@
             populateCity();
             populateRegion();
             populateStreet();
+            $("#sortDate").trigger("click");
             
         });
         $("#dateFrom").daterangepicker({singleDatePicker: true});
