@@ -34,7 +34,10 @@ module.exports = {
         var user = session.user();
         var clientId = user.client.id;
         request.create({client: clientId, state: state, city: city, region: region, street: street}).exec(function(err, doc){
-            var messageStr = "用户"+user.username+"推广请求已发出-地点:"+city;
+            var messageStr = "用户"+user.username+"推广请求已发出-地点:"+state;
+            if (city!="") messageStr+="->"+city;
+            if (region!="") messageStr+="->"+region;
+            if (street!="") messageStr+="->"+street;
             ClientMessage.create({client: clientId, message: messageStr}).exec(function(){
                 res.redirect('/?message=OK');
             });
