@@ -141,15 +141,16 @@
                         <button class="btn btn-default">搜索</button>
                     </form>
                       
-                    
-                    <div class="panel panel-default">
+                    <div class="col-md-6">
+                    <div class="panel panel-default full-width">
                         <div class="panel-heading">推广监控（近七日）</div>
                         <div class="panel-body">
                         </div>
-                        <canvas id="access-ctx" width="500" height="400"></canvas>
+                        <canvas id="access-ctx" width="450" height="400"></canvas>
+                    </div>
                     </div>
                     <div class="col-md-6">
-                    <div class="panel panel-default clearfix">
+                    <div class="panel panel-default clearfix full-width">
                         <div class="panel-heading">点击量</div>
                         <div class="panel-body">
                             总点击量： <%=totalAccess%><br>
@@ -160,7 +161,7 @@
                     <div class="col-md-6">
                     <% if(selectedAd){
                     %>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default full-width">
                         <div class="panel-heading">奖项</div>
                         <table class="table table-strip" id="prizeTable">
                             <tr><td>奖项</td><td>数量</td><td>剩余</td></tr>
@@ -200,7 +201,8 @@
         </div>
 <div class="row">
 <div class="col-md-12">
-    <div class="panel panel-white no-radius text-center full-width">
+    <div class="panel panel-white panel-default no-radius text-center full-width">
+        <div class="panel-body">
         <h3>我的消息</h3>
         <div class="list-group">
         <%
@@ -221,7 +223,7 @@
         
         </p>
     </div>
-    
+    </div>
 </div>
 </div>
 
