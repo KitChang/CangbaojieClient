@@ -13,9 +13,9 @@ module.exports = {
         advertisement.find({client: user.client.id}).exec(function(err, ads){
             var dateTo = moment().toDate();
             var dateFrom = moment(dateTo).subtract(7, "days").startOf('day').toDate();
-            option = {client: user.client.id};
-            option.sort = 'createdAt DESC';
-            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc' }).populate("appUser").exec(function(err, results){
+            option = {client: user.client.id}
+            option['sort'] = 'createdAt ASC';
+            access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'ASC' }).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
         })
