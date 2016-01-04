@@ -8,7 +8,7 @@
                     <h2 class="StepTitle">我要推广</h2>
                     <p class="text-small">申请在某个地区推广<br>_ </p>
                     <p class="links cl-effect-1">
-                        <a href="/request/new" class="button button-glow button-border button-rounded button-primary">推广</a>
+                        <a style="background-color: #FFE301;" href="/request/new" class="button button-rounded button-warning">推广</a>
                     </p>
                 </div>
                 </div>
@@ -17,9 +17,9 @@
                 <div class="panel panel-white no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要充值</h2>
-                    <p class="text-small">账户:  <%=user.client.name%><br> 余额:  $<%=client.account.toFixed(2)%> </p>
-                    <p class="links cl-effect-1">
-                        <a href="#topup" class="fancybox button button-glow button-border button-rounded button-primary">充值</a>
+                    <p class="text-small">账户:  <%=user.client.name%><br> 余额:  <big>$<%=client.account.toFixed(2)%></big> </p>
+                    <p class="links cl-effect-2">
+                        <a style="background-color: #FFE301;" href="#topup" class="fancybox button button-rounded button-warning">充值</a>
                     </p>
                 </div>
                 </div>
@@ -29,8 +29,8 @@
                 <div class="panel-body">
                     <h2 class="StepTitle">给藏宝街留言</h2>
                     <p class="text-small">向我们表达您的意见<br>_ </p>
-                    <p class="links cl-effect-1">
-                        <a href="#message" class="fancybox button button-glow button-border button-rounded button-primary">留言</a>
+                    <p class="links cl-effect-3">
+                        <a style="background-color: #FFE301;" href="#message" class="fancybox button button-rounded button-warning">留言</a>
                     </p>
                 </div>
                 </div>
@@ -138,50 +138,55 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-default">搜索</button>
+                        <button class="btn btn-warning">搜索</button>
                     </form>
                       
-                    <div class="col-md-6">
-                    <div class="panel panel-default full-width">
-                        <div class="panel-heading">推广监控（近七日）</div>
+                    <div class="col-md-7">
+                    <div class="panel full-width">
+                        <div style="background-color: #FFE301!important;" class="panel-heading"><b>推广监控（近七日）</b></div>
                         <div class="panel-body">
                         </div>
-                        <canvas id="access-ctx" width="450" height="400"></canvas>
+                        <canvas id="access-ctx" style="width:100%; height: 450px;"></canvas>
                     </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="panel panel-default clearfix full-width">
-                        <div class="panel-heading">点击量</div>
-                        <div class="panel-body">
-                            总点击量： <%=totalAccess%><br>
-                            今日点击量： <%=accessToday%>
+                    <div class="col-md-5">
+                    <div class="panel clearfix full-width">
+                        <div style="background-color: #FFE301!important;" class="panel-heading"><b>点击量</b></div>
+                        <div class="panel-body text-center">
+                            <big>总点击量</big><br> <h1 style="margin-top: 5px;"><span style="background-color: #FFE301;" class="label label-warning"><%=totalAccess%></span></h1><br>
+                            <big>今日点击量</big><br> <h3 style="margin-top: 5px;"><span style="background-color: #FFE301;" class="label label-warning"><%=accessToday%></span></h3>
                         </div>
                     </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                     <% if(selectedAd){
                     %>
-                    <div class="panel panel-default full-width">
-                        <div class="panel-heading">奖项</div>
+                    <div class="panel panel full-width">
+                        <div style="background-color: #FFE301!important;" class="panel-heading"><b>奖项统计</b></div>
                         <table class="table table-strip" id="prizeTable">
-                            <tr><td>奖项</td><td>数量</td><td>剩余</td></tr>
-                            <tr><td><%=selectedAd.firstPrize%></td>
+                            <tr><td>奖项</td><td>奖品</td><td>数量</td><td>剩余</td></tr>
+                            <tr><td>一等奖</td>
+                                <td><%=selectedAd.firstPrize%></td>
                                 <td><%=selectedAd.firstPrizeQuantity%></td>
                                 <td><%=selectedAd.firstPrizeQuantityRemain%></td>
                             </tr>
-                            <tr><td><%=selectedAd.secondPrize%></td>
+                            <tr><td>二等奖</td>
+                                <td><%=selectedAd.secondPrize%></td>
                                 <td><%=selectedAd.secondPrizeQuantity%></td>
                                 <td><%=selectedAd.secondPrizeQuantityRemain%></td>
                             </tr>
-                            <tr><td><%=selectedAd.thirdPrize%></td>
+                            <tr><td>三等奖</td>
+                                <td><%=selectedAd.thirdPrize%></td>
                                 <td><%=selectedAd.thirdPrizeQuantity%></td>
                                 <td><%=selectedAd.thirdPrizeQuantityRemain%></td>
                             </tr>
-                            <tr><td><%=selectedAd.fourthPrize%></td>
+                            <tr><td>四等奖</td>
+                                <td><%=selectedAd.fourthPrize%></td>
                                 <td><%=selectedAd.fourthPrizeQuantity%></td>
                                 <td><%=selectedAd.fourthPrizeQuantityRemain%></td>
                             </tr>
-                            <tr><td><%=selectedAd.fifthPrize%></td>
+                            <tr><td>五等奖</td>
+                                <td><%=selectedAd.fifthPrize%></td>
                                 <td><%=selectedAd.fifthPrizeQuantity%></td>
                                 <td><%=selectedAd.fifthPrizeQuantityRemain%></td>
                             </tr>
@@ -203,7 +208,7 @@
 <div class="col-md-12">
     <div class="panel panel-white panel-default no-radius text-center full-width">
         <div class="panel-body">
-        <h3>我的消息</h3>
+        <div style="background-color: #FFE301!important;" class="panel-heading"><b>我的消息</b></div>
         <div class="list-group">
         <%
             var message;
@@ -477,7 +482,7 @@
                     datasets: [
                         {
                             label: "My First dataset",
-                            fillColor: "rgba(220,220,220,0.2)",
+                            fillColor: "rgba(255,227,1,0.2)",
                             strokeColor: "gold",
                             pointColor: "#FFE301",
                             pointStrokeColor: "#fff",
