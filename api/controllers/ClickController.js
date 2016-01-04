@@ -14,6 +14,7 @@ module.exports = {
             var dateTo = moment().toDate();
             var dateFrom = moment(dateTo).subtract(7, "days").startOf('day').toDate();
             option = {client: user.client.id};
+            option.sort = 'createdAt DESC';
             access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc' }).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
@@ -23,7 +24,7 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
-        advertisement.find({client: user.client.id}).exec(function(err, ads){
+        advertisement.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, ads){
             var duration = req.param('duration');
             var dateFrom, dateTo;
             if(duration=="define"){
@@ -79,6 +80,7 @@ module.exports = {
             if(street&&street!=""){
                 option.street = street;
             }
+            option.sort = 'createdAt DESC';
             access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc'}).populate("appUser").exec(function(err, results){
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
