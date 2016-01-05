@@ -15,6 +15,10 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
+        console.log(user);
+        if (user.client==undefined) {
+            return;
+        };
         var clientId = user.client.id;
         if(user){
             clientId = user.client.id;
