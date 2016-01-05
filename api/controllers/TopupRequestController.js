@@ -15,6 +15,7 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
+        console.log(user);
         var clientId = user.client.id;
         var topupValue = req.param('topupValue');
         var name = req.param('name');
