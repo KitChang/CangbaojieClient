@@ -16,6 +16,9 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         console.log(user);
+        if (user.client==undefined) {
+            return;
+        };
         var clientId = user.client.id;
         var topupValue = req.param('topupValue');
         var name = req.param('name');
