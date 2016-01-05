@@ -1,7 +1,19 @@
+
 <div class="content">
     
     <div class="container container-fluid container-fullw bg-white">
         <div class=“row”>
+            <% 
+            if(req.param('message')=="OK"){
+            %>
+            <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> 发送成功
+            </p>
+            <%
+            }
+            %>
+                
+            
             <div class="col-sm-4">
                 <div class="panel panel-white no-radius text-center full-width">
                 <div class="panel-body">
