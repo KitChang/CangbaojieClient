@@ -51,7 +51,7 @@ module.exports.policies = {
         login: [],
         logout: 'sessionAuth'
     },
-    TopupController: {
+    TopupRequestController: {
         '*': 'sessionAuth'
     },
     MessageController: {

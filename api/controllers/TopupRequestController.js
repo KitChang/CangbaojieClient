@@ -16,6 +16,9 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         var clientId = user.client.id;
+        if(user){
+            clientId = user.client.id;
+        }
         var topupValue = req.param('topupValue');
         var name = req.param('name');
         var contactPhone = req.param('contactPhone');
