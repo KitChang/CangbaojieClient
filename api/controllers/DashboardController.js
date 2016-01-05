@@ -31,7 +31,7 @@ module.exports = {
                         accessCountToday = accessToday.length;
                     if(accessResults)
                         totalAccess = accessResults.length;
-                    ClientMessage.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, clientMessages){
+                    ClientMessage.find({client: user.client.id, limit: 10, sort: 'createdAt DESC'}).exec(function(err, clientMessages){
                         res.view('dashboard', {ads: ads, selectedAd: null, access: accessResults,moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, user: user, clientMessages: clientMessages, client: clientOne});
                     });
                         

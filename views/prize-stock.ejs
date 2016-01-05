@@ -2,9 +2,9 @@
     <div class="content">
       <div class="container">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <ol class="breadcrumb panel-heading">
-                          <li>奖项统计</a></li>
+            <div class="panel full-width">
+                <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
+                          <li><b>奖项统计</b></li>
                 </ol>      
                 <div class="panel-body">
                     <form class="form-inline" action="/prize-stock/search" method="get">
@@ -32,7 +32,7 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-default">搜索</button>
+                        <button class="btn btn-warning">搜索</button>
                     </form>
                     
                 </div>
@@ -41,7 +41,7 @@
                 <div class="panel-body">
                 <table class="table table-striped" id="prize-stock-table">
                     <thead>
-                    <tr><th></th><th>奖项</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
+                    <tr><th>奖项</th><th>奖品</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
                     </thead>
                     <tbody>
                     <%
