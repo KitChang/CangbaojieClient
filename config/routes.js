@@ -82,6 +82,10 @@ module.exports.routes = {
   'post /message': {
       controller: 'MessageController',
       action: 'create'
+  },
+  'get /dashboard/all-client-messages': {
+      controller: 'DashboardController',
+      action: 'allClientMessages'
   }
   /***************************************************************************
   *                                                                          *

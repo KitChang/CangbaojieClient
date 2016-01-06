@@ -107,6 +107,19 @@ module.exports = {
             })
         });
     },
+    allClientMessages: function(req, res){
+        var Session = require("../lib/session");
+        var session = new Session(req.session);
+        var user = session.user();
+        var clientId = user.client.id;
+        if(!user){
+            res.redirect("/login");
+            return;
+        }
+        ClientMessage.find({client: user.client.id, sort: 'createdAt DESC'}).exec(function(err, clientMessageArr){
+            res.view("all-client-messages", {clientMessageArr: clientMessageArr, moment: moment});
+        });
+    }
 
     
 };

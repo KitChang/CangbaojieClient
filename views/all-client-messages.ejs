@@ -1,0 +1,29 @@
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+    <div class="panel panel-white panel-default no-radius text-center full-width">
+        <div class="panel-body">
+
+                                <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+        </div>
+        <div class="panel-body">
+        <div style="background-color: #FFE301!important;" class="panel-heading"><b>我的消息</b></div>
+        <div class="list-group">
+        <%
+            var message;
+            while(clientMessageArr.length){
+                message = clientMessageArr.shift();
+        %>
+        <li class="list-group-item">
+            <%=message.message%><span class="badge"><%=moment().to(moment(message.createdAt+""))%></span>
+        </li>
+        <%
+            }
+        %>
+        </div>
+
+    </div>
+    </div>
+</div>
+</div>
+</div>
