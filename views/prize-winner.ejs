@@ -2,14 +2,14 @@
     
       <div class="container">
         <div class="row ">
-            <div class="panel full-width">
+            <div class="panel panel-default-cbj full-width">
                 <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
-                              <li><b>获奖人</b></li>
+                              <li><b>获奖统计</b></li>
                 </ol>      
                     
                 <div class="panel-body ">
                     <form class="form-inline" action="/prize-winner/search" method="get">
-                        <div class="form-group">
+                        <div style="margin-bottom: 10px;" class="form-group">
                         <label>广告</label>
                         <select class="form-control" name="advertisement">
                             <option value="">所有广告</option>
@@ -33,8 +33,8 @@
                             %>
                         </select>
                         </div>
-                        <div class="form-group">
-                        <label>等奖</label>
+                        <div style="margin-bottom: 10px;" class="form-group">
+                        <label>奖项</label>
                         <select class="form-control" name="prize" >
                             <%
                             if(prize){
@@ -70,6 +70,8 @@
                             
                         </select>
                         </div>
+                        <br>
+                        <b>地区</b>
                         <div class="form-group">
                             <select class="form-control" id="state" name="state">
                                 <%
@@ -119,7 +121,7 @@
                                
                             </select>
                         </div>
-                        <button class="btn btn-warning">搜索</button>
+                        <button class="btn btn-primary">搜索</button>
                     </form>
                     
                     

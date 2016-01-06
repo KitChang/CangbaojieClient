@@ -15,7 +15,7 @@
                 
             
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要推广</h2>
                     <p class="text-small">申请在某个地区推广<br>_ </p>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要充值</h2>
                     <p class="text-small">账户:  <%=user.client.name%><br> 余额:  <big>$<%=client.account.toFixed(2)%></big> </p>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">给藏宝街留言</h2>
                     <p class="text-small">向我们表达您的意见<br>_ </p>
@@ -53,7 +53,7 @@
       <div class="container">
         <div class="row">
             <div class="col-md-12">
-            <div class="panel panel-default full-width">
+            <div class="panel panel-default-cbj full-width">
                 <div class="panel-body">
                     <form class="form-inline" action="/search" method="get">
                         <div class="panel-elem">
@@ -150,12 +150,12 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-warning">搜索</button>
+                        <button class="btn btn-primary">搜索</button>
                     </form>
                       
                     <div class="col-md-7">
                         
-                    <div class="panel panel-default full-width">
+                    <div class="panel panel-default-cbj full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>推广监控（近七日）</b></div>
                         <div class="panel-body">
                         </div>
@@ -163,7 +163,7 @@
                     </div>
                     </div>
                     <div class="col-md-5">
-                    <div class="panel panel-default clearfix full-width">
+                    <div class="panel panel-default-cbj clearfix full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>点击量</b></div>
                         <div class="panel-body text-center">
                             <big><b>总点击量</b></big><br> <h1 style="margin-top: 5px;"><span style="background-color: #FFE301;" class="label label-warning"><%=totalAccess%></span></h1><br>
@@ -174,7 +174,7 @@
                     <div class="col-md-5">
                     <% if(selectedAd){
                     %>
-                    <div class="panel panel-default full-width">
+                    <div class="panel panel-default-cbj full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>奖项统计</b></div>
                         <table class="table table-strip" id="prizeTable">
                             <tr><td>奖项</td><td>奖品</td><td>数量</td><td>剩余</td></tr>
@@ -219,12 +219,12 @@
         </div>
 <div class="row">
 <div class="col-md-12">
-    <div class="panel panel-white panel-default no-radius text-center full-width">
-        <div style="background-color: #FFE301!important;" class="panel-heading"><a class="fancybox" href="/dashboard/all-client-messages" class="right"><b>我的消息</b></a></div>
-        <div class="panel-body">
+    <div class="panel panel-white panel-default-cbj no-radius full-width">
+        <div style="background-color: #FFE301!important;" class="panel-heading"><b>我的消息</b></div>
+        <div class="panel-body text-center">
             
         
-        <div class="list-group">
+        <div style="margin-bottom: 5px;" class="list-group">
         <%
             var message;
             while(clientMessages.length){
@@ -239,9 +239,9 @@
         
 
         </div>
-        <p>
-        
-        </p>
+        <a style="font-size: 12px;" class="fancybox right" href="/dashboard/all-client-messages">
+                    显示所有
+                    </a>
     </div>
     </div>
 </div>
