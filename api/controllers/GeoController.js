@@ -5344,7 +5344,7 @@ module.exports = {
         var stateParam = req.param("state");
         var cityParam = req.param("city");
         var regionParam = req.param('region');
-        console.log(regionParam+" "+cityParam+" "+regionParam);
+        //console.log(regionParam+" "+cityParam+" "+regionParam);
         var stateArr = _.where(state, {name: stateParam});
         var cityArr = stateArr[0].city;
         var city = _.where(cityArr, {name: cityParam});

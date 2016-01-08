@@ -54,7 +54,9 @@ body {
   vertical-align: middle;
   border-top: 1px solid #ddd;
 }
-
+.breadcrumb {
+  border-radius: 0px;
+}
 
 
 
