@@ -1,13 +1,13 @@
-
-
+passwordHash = require('password-hash');
 module.exports = {
 	
     login: function(req, res){
+        
         var username = req.param('username');
         var password = req.param('password');
-        user_client.findOne({username: username, password: password}).populate('client').exec(function(err, doc) {
+        user_client.findOne({username: username}).populate('client').exec(function(err, doc) {
             
-            if(doc==null){
+            if(doc==null||!passwordHash.verify(password, doc.password)){
                 res.redirect('/login');
                 return;
             }
