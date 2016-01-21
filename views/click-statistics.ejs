@@ -1,7 +1,7 @@
       <div class="container content">
         <div class="row">
             <div class="col-md-12">
-            <div class="panel full-width">
+            <div class="panel panel-default-cbj full-width">
                 <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
                     <li>点击量</a></li>
                 </ol>      
@@ -157,7 +157,7 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-warning">搜索</button>
+                        <button class="btn btn-primary">搜索</button>
                         
                     </form>
                     
@@ -260,6 +260,7 @@
         var selectedCity = $("#city option:selected").text();
         if(selectedCity=="所有城市"||selectedCity==""){
             $("#region").append("<option value=''>所有地区</option>");
+            return;
         }
         $.ajax({
         url: "/geo/region?state="+selectedState+"&city="+selectedCity,
@@ -281,8 +282,10 @@
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
             var selectedRegion = $("#region option:selected").text();
-            if(selectedRegion=="所有地区"||selectedRegion=="")
-                $("#street").append("<option value=''>所有街道</option>");;
+            if(selectedRegion=="所有地区"||selectedRegion=="") {
+                $("#street").append("<option value=''>所有街道</option>");
+                return;
+            }
             
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,

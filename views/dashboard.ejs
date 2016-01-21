@@ -10,12 +10,17 @@
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> 发送成功
             </p>
             <%
-            }
+            } else if (req.param('message')=="NO") {
             %>
-                
+            <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> 发送失败
+            </p>
+            <%
+                }
+            %>
             
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要推广</h2>
                     <p class="text-small">申请在某个地区推广<br>_ </p>
@@ -26,7 +31,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">我要充值</h2>
                     <p class="text-small">账户:  <%=user.client.name%><br> 余额:  <big>$<%=client.account.toFixed(2)%></big> </p>
@@ -37,7 +42,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-white no-radius text-center full-width">
+                <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
                     <h2 class="StepTitle">给藏宝街留言</h2>
                     <p class="text-small">向我们表达您的意见<br>_ </p>
@@ -53,7 +58,7 @@
       <div class="container">
         <div class="row">
             <div class="col-md-12">
-            <div class="panel panel-default full-width">
+            <div class="panel panel-default-cbj full-width">
                 <div class="panel-body">
                     <form class="form-inline" action="/search" method="get">
                         <div class="panel-elem">
@@ -150,20 +155,20 @@
                             %>
                         </select>
                         </div>
-                        <button class="btn btn-warning">搜索</button>
+                        <button class="btn btn-primary">搜索</button>
                     </form>
                       
                     <div class="col-md-7">
                         
-                    <div class="panel panel-default full-width">
+                    <div class="panel panel-default-cbj full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>推广监控（近七日）</b></div>
-                        <div class="panel-body">
+                        <div id="panel" class="panel-body">
                         </div>
                         <canvas id="access-ctx" style="width:100%; height: 450px;"></canvas>
                     </div>
                     </div>
                     <div class="col-md-5">
-                    <div class="panel panel-default clearfix full-width">
+                    <div class="panel panel-default-cbj clearfix full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>点击量</b></div>
                         <div class="panel-body text-center">
                             <big><b>总点击量</b></big><br> <h1 style="margin-top: 5px;"><span style="background-color: #FFE301;" class="label label-warning"><%=totalAccess%></span></h1><br>
@@ -174,7 +179,7 @@
                     <div class="col-md-5">
                     <% if(selectedAd){
                     %>
-                    <div class="panel panel-default full-width">
+                    <div class="panel panel-default-cbj full-width">
                         <div style="background-color: #FFE301!important;" class="panel-heading"><b>奖项统计</b></div>
                         <table class="table table-strip" id="prizeTable">
                             <tr><td>奖项</td><td>奖品</td><td>数量</td><td>剩余</td></tr>
@@ -219,12 +224,12 @@
         </div>
 <div class="row">
 <div class="col-md-12">
-    <div class="panel panel-white panel-default no-radius text-center full-width">
-        <div style="background-color: #FFE301!important;" class="panel-heading"><a class="fancybox" href="/dashboard/all-client-messages" class="right"><b>我的消息</b></a></div>
-        <div class="panel-body">
+    <div class="panel panel-white panel-default-cbj no-radius full-width">
+        <div style="background-color: #FFE301!important;" class="panel-heading"><b>我的消息</b></div>
+        <div class="panel-body text-center">
             
         
-        <div class="list-group">
+        <div style="margin-bottom: 5px;" class="list-group">
         <%
             var message;
             while(clientMessages.length){
@@ -239,9 +244,9 @@
         
 
         </div>
-        <p>
-        
-        </p>
+        <a style="font-size: 12px;" class="fancybox right" href="/dashboard/all-client-messages">
+                    显示所有
+                    </a>
     </div>
     </div>
 </div>
@@ -250,21 +255,21 @@
           
       </div>
       <div id="message">
-        <form method="post" action="/message">
+        <form id="msg-form" method="post" action="/message">
           <div class="form-group">
-            <label for="exampleInputEmail1">姓名</label>
-            <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<%=user.username%>">
+            <label for="exampleInputEmail1">姓名 <span class="mandatory">*</span></label>
+            <input type="text" name="name" class="form-control" id="name" value="<%=user.username%>">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">联系电话</label>
-            <input type="text" name="contactPhone" class="form-control" id="exampleInputPassword1" value="<%=user.client.phone%>">
+            <label for="exampleInputPassword1">联系电话 <span class="mandatory">*</span></label>
+            <input type="text" name="contactPhone" class="form-control" id="contactPhone" value="<%=user.client.phone%>">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">电子邮件</label>
-            <input type="text" name="email" class="form-control" id="exampleInputPassword1" value="<%=user.email%>">
+            <label for="exampleInputPassword1">电子邮件 <span class="mandatory">*</span></label>
+            <input type="text" name="email" class="form-control" id="email" value="<%=user.email%>">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">标题</label>
+            <label for="exampleInputPassword1">标题 <span class="mandatory">*</span></label>
             <input type="text" name="title" class="form-control"  style="width: 100%" id="title" placeholder="">
           </div>
           <div class="form-group">
@@ -272,35 +277,35 @@
             <textarea style="text-align:left; width: 100%; height: 100px;" id="message" name="message" class="form-control">
             </textarea>
           </div>
-          <button type="submit" class="btn btn-primary">提交</button>
+          <button type="button" id="msg-submit" class="btn btn-primary">提交</button>
         </form>
 
       </div>
     
       <div id="topup">
-        <form method="post" action="/topup">
+        <form id="topup-form" method="post" action="/topup">
           <div class="form-group">
-            <label for="exampleInputEmail1">充值金额</label>
-            <input type="text" name="topupValue" class="form-control" id="exampleInputEmail1" placeholder="">
+            <label>充值金额 <span class="mandatory">*</span></label>
+            <input type="text" name="topupValue" class="form-control" id="topupValue" placeholder="">
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">姓名</label>
-            <input type="text" name="name" class="form-control" id="exampleInputEmail1" value="<%=user.username%>">
+            <label>姓名 <span class="mandatory">*</span></label>
+            <input type="text" name="name" class="form-control" id="topupname" value="<%=user.username%>">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">联系电话</label>
-            <input type="text" name="contactPhone" class="form-control" id="exampleInputPassword1" value="<%=user.client.phone%>">
+            <label>联系电话 <span class="mandatory">*</span></label>
+            <input type="text" name="contactPhone" class="form-control" id="topupcontactPhone" value="<%=user.client.phone%>">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">电子邮件</label>
-            <input style="width:100%;" type="text" name="email" class="form-control" id="exampleInputPassword1" value="<%=user.email%>">
+            <label>电子邮件 <span class="mandatory">*</span></label>
+            <input style="width:100%;" type="text" name="email" class="form-control" id="topupemail" value="<%=user.email%>">
           </div>
           <div class="form-group">
             <label>备注</label>
             <textarea style="text-align:left; width:100%; height: 100px;"  name="remarks" id="remarks" class="form-control">
             </textarea>
           </div>
-          <button type="submit" class="btn btn-primary">提交</button>
+          <button type="button" id="topup-submit" class="btn btn-primary">提交</button>
         </form>
 
       </div>
@@ -332,6 +337,11 @@
 
     <script>
     $(document).ready(function() {
+        $("#access-ctx").width($("#panel").width());
+        $(window).resize(function () {
+            // body...
+            $("#access-ctx").width($("#panel").width());
+        });
         $(".fancybox").fancybox({
             maxWidth	: 800,
             maxHeight	: 800,
@@ -346,7 +356,50 @@
         populateCity();
         populateRegion();
         populateStreet();
-        
+        $("#msg-submit").click(function(){
+                var email = $("#email").val();
+                var contactPhone = $("#contactPhone").val();
+
+                var filter = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                var errMsg = [];
+                if (!filter.test(email)) {
+                    errMsg.push("邮箱格式有误");
+                }
+                if(!/\d{11}/.test(contactPhone)){
+                    errMsg.push("手机为11位数字");
+                }
+                if($("#name").val()=="" || $("#title").val()==""){
+                    errMsg.push("星号不为空");
+                }
+                
+                if(errMsg.length > 0){
+                    alert(errMsg.join('\n'));
+                    return;
+                }
+                $("#msg-form").submit();
+        })
+        $("#topup-submit").click(function(){
+                var email = $("#topupemail").val();
+                var contactPhone = $("#topupcontactPhone").val();
+
+                var filter = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                var errMsg = [];
+                if (!filter.test(email)) {
+                    errMsg.push("邮箱格式有误");
+                }
+                if(!/\d{11}/.test(contactPhone)){
+                    errMsg.push("手机为11位数字");
+                }
+                if ($("#topupname").val()=="" || $("#topupValue").val()==""){
+                    errMsg.push("星号不为空");
+                }
+                
+                if(errMsg.length > 0){
+                    alert(errMsg.join('\n'));
+                    return;
+                }
+                $("#topup-form").submit();
+        })
         
         
         
@@ -356,8 +409,10 @@
     $("#message").hide();
         function populateCity(){
         var selectedState = $("#state option:selected").text();
-        if(selectedState=="" || selectedState=="所有省")
+        if(selectedState=="" || selectedState=="所有省") {
             $("#city").append("<option value=''>所有城市</option>");
+            return;
+        }
             
         $.ajax({
         url: "/geo/city?state="+selectedState
@@ -378,6 +433,7 @@
         var selectedCity = $("#city option:selected").text();
         if(selectedCity=="所有城市"||selectedCity==""){
             $("#region").append("<option value=''>所有地区</option>");
+            return;
         }
         $.ajax({
         url: "/geo/region?state="+selectedState+"&city="+selectedCity,
@@ -399,8 +455,10 @@
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
             var selectedRegion = $("#region option:selected").text();
-            if(selectedRegion=="所有地区"||selectedRegion=="")
-                $("#street").append("<option value=''>所有街道</option>");;
+            if(selectedRegion=="所有地区"||selectedRegion=="") {
+                $("#street").append("<option value=''>所有街道</option>");
+                return;
+            }
             
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,

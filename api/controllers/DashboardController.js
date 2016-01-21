@@ -96,7 +96,7 @@ module.exports = {
                     if(advertisementId == "")
                         advertisementId = "-1";
                      advertisement.findOne({id: advertisementId}).exec(function(err, ad){
-                        ClientMessage.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, clientMessages){
+                        ClientMessage.find({client: user.client.id, limit: 10, sort: 'createdAt DESC'}).exec(function(err, clientMessages){
                         res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});    
                         });
 
