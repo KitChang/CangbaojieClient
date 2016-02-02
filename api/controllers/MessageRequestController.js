@@ -28,13 +28,13 @@ module.exports = {
         var clientId = user.client.id;
         
         advertisement.findOne({id: advertisementId, client: clientId}).exec(function(err, ad){
-            console.log("asdfds");
             if(!ad){
                 return res.serverError();
             }
-            console.log("sdfds");
             request.create({advertisement: advertisementId, client: clientId, state: state, city: city, region: region, street: street, location_type: locationType}).exec(function(err, doc){
-                
+                if(err){
+                    return res.serverError(err);
+                }
                 res.redirect('/request?message=提交成功');
             });
         });

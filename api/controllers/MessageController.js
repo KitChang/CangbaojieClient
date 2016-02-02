@@ -30,8 +30,14 @@ module.exports = {
             return;
         }
         message.create({user: user.id, client: clientId, name: name, contactPhone: contactPhone, email: email, title: title, message: message2}).exec(function(err){
+            if(err){
+                return res.serverError(err);
+            }
             var messageStr = "用户"+user.username+"留言已发出-标题:"+title;
             ClientMessage.create({client: clientId, message: messageStr}).exec(function(){
+                if(err){
+                    return res.serverError(err);
+                }
                 res.redirect('/?message=OK');
             });
         });

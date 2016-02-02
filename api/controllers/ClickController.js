@@ -11,11 +11,17 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         advertisement.find({client: user.client.id}).exec(function(err, ads){
+            if(err){
+                return res.serverError(err);
+            }
             var dateTo = moment().toDate();
             var dateFrom = moment(dateTo).subtract(7, "days").startOf('day').toDate();
             option = {client: user.client.id}
             option['sort'] = 'createdAt ASC';
             access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'ASC' }).populate("appUser").exec(function(err, results){
+                if(err){
+                    return res.serverError(err);
+                }
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
         })
@@ -25,6 +31,9 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         advertisement.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, ads){
+            if(err){
+                return res.serverError(err);
+            }
             var duration = req.param('duration');
             var dateFrom, dateTo;
             if(duration=="define"){
@@ -82,6 +91,9 @@ module.exports = {
             }
             option.sort = 'createdAt DESC';
             access.find(option).where({ "createdAt" : { ">" : dateFrom, "<" : dateTo }}).sort({createdAt: 'desc'}).populate("appUser").exec(function(err, results){
+                if(err){
+                    return res.serverError(err);
+                }
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
             
@@ -89,11 +101,7 @@ module.exports = {
         
 
     
-    },
-    updateCol: function(req, res){
-        access.update({}, {locationType: '公交站'}).exec(function(err){
-            res.end();
-        })
     }
+    
 };
 

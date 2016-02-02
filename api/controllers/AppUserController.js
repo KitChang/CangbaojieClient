@@ -21,6 +21,9 @@ module.exports = {
         var id = req.param('id');
         
         AppUser.findOne({id: id}).exec(function(err, result){
+            if(err){
+                return res.serverError(err);
+            }
             
             res.view('user-one', {result: result})
         });
@@ -33,6 +36,9 @@ module.exports = {
         var client = req.param('client');
         
         AppUser.findOne({username: username}).exec(function(err, doc){
+            if(err){
+                return res.serverError(err);
+            }
             
             if(doc!=null){
                 return res.serverError(err);
@@ -56,7 +62,9 @@ module.exports = {
             option.password = password;
         
         AppUser.update({id: id}, option).exec(function(err, doc){
-            
+            if(err){
+                return res.serverError(err);
+            }
             res.redirect('/user/'+id);  
         });
     },
@@ -64,15 +72,7 @@ module.exports = {
         
         res.view('user-new');
     },
-    destroy: function(req, res){
-        
-        var id = req.param("id");
-        
-        AppUser.destroy({id: id}).exec(function(err, result){
-            
-            res.redirect('user');
-        })
-    },
+    
     login: function(req, res){
         
         var username = req.param('username');
@@ -80,7 +80,9 @@ module.exports = {
         
         
         AppUser.findOne({username: username, password: password}).exec(function(err, doc) {
-            
+            if(err){
+                return res.serverError(err);
+            }
             if(doc==null){
                 res.redirect('/login');
                 return;
@@ -98,14 +100,8 @@ module.exports = {
         var session = new Session(req.session);
         session.logout();
         res.redirect("/login");
-    },
-    destroy: function(req, res){
-        user_client.destroy().exec(function(err){
-            user.destroy().exec(function(err){
-            res.end();
-        });
-        });
     }
+    
     
     
     

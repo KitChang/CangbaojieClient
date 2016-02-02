@@ -16,7 +16,13 @@ module.exports = {
             return res.serverError();
         }
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
+            if(err){
+                return res.serverError(err);
+            }
             advertisement.find({client: user.client.id}).exec(function(err, ads){
+                if(err){
+                    return res.serverError(err);
+                }
             var dateTo = moment().endOf('day').toDate();
             var dateFrom = moment().subtract(7, "days").startOf('day').toDate();
             var todayStart = moment().startOf('day').toDate();
@@ -24,14 +30,23 @@ module.exports = {
             option = {};
             //option.client = user.client.id;
             access.find({client: user.client.id}).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){
-                
+                if(err){
+                    return res.serverError(err);
+                }
+
                 access.find(option).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
+                    if(err){
+                        return res.serverError(err);
+                    }
                     var accessCountToday = 0; totalAccess = 0;
                     if(accessToday)
                         accessCountToday = accessToday.length;
                     if(accessResults)
                         totalAccess = accessResults.length;
                     ClientMessage.find({client: user.client.id, limit: 10, sort: 'createdAt DESC'}).exec(function(err, clientMessages){
+                        if(err){
+                            return res.serverError(err);
+                        }
                         res.view('dashboard', {ads: ads, selectedAd: null, access: accessResults,moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, user: user, clientMessages: clientMessages, client: clientOne});
                     });
                         
@@ -51,7 +66,13 @@ module.exports = {
         var clientId = user.client.id;
         
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
+            if(err){
+                return res.serverError(err);
+            }
             advertisement.find({client: user.client.id}).exec(function(err, ads){
+                if(err){
+                    return res.serverError(err);
+                }
                 var locationType = req.param('locationType');
                 var dateTo = moment().endOf('day').toDate();
                 var dateFrom = moment().subtract(7, "days").startOf('day').toDate();
@@ -87,7 +108,13 @@ module.exports = {
                 }
                 option.client = user.client.id;
                 access.find(option).where({ "createdAt" : { ">=" : dateFrom, "<" : dateTo }}).exec(function(err, accessResults){
+                    if(err){
+                        return res.serverError(err);
+                    }
                 access.find(option).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
+                    if(err){
+                        return res.serverError(err);
+                    }
                     var accessCountToday = 0; totalAccess = 0;
                     if(accessToday)
                         accessCountToday = accessToday.length;
@@ -96,7 +123,13 @@ module.exports = {
                     if(advertisementId == "")
                         advertisementId = "-1";
                      advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+                         if(err){
+                            return res.serverError(err);
+                        }
                         ClientMessage.find({client: user.client.id, limit: 10, sort: 'createdAt DESC'}).exec(function(err, clientMessages){
+                        if(err){
+                            return res.serverError(err);
+                        }
                         res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});    
                         });
 
@@ -117,6 +150,9 @@ module.exports = {
             return;
         }
         ClientMessage.find({client: user.client.id, sort: 'createdAt DESC'}).exec(function(err, clientMessageArr){
+            if(err){
+                return res.serverError(err);
+            }
             res.view("all-client-messages", {clientMessageArr: clientMessageArr, moment: moment});
         });
     }

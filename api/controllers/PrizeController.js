@@ -14,6 +14,9 @@ module.exports = {
             return res.serverError();
         }
         advertisement.find({client: user.client.id}).exec(function(err, ads){
+            if(err){
+                return res.serverError(err);
+            }
             res.view('prize-stock', {ads: ads, selectedAd: null});
         });
         
@@ -27,7 +30,13 @@ module.exports = {
             return res.serverError();
         }
         advertisement.find({client: user.client.id}).exec(function(err, ads){
+            if(err){
+                return res.serverError(err);
+            }
             advertisement.findOne({id: addId}).exec(function(err, ad){
+                if(err){
+                    return res.serverError(err);
+                }
                 res.view('prize-stock', {ads: ads, selectedAd: ad});
             })
           
@@ -39,11 +48,17 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         advertisement.find({client: user.client.id}).exec(function(err, advertisements){
+            if(err){
+                return res.serverError(err);
+            }
             var adId = [];
             for(var i=0; i<advertisements.length; i++){
                 adId.push(advertisements[i].id);
             }
             PrizeCoupon.find({advertisement: adId}).populate('appUser').exec(function(err, results){
+                if(err){
+                    return res.serverError(err);
+                }
                 res.view('prize-winner', {results: results, ads: advertisements, moment: moment, prize: "all", adSelected: null});
             });
             
@@ -59,8 +74,9 @@ module.exports = {
         var option = {};
         advertisement.find({client: user.client.id}).exec(function(err, advertisements){
             
-            console.log(advertisementId);
-            
+            if(err){
+                return res.serverError(err);
+            }
             if(prize!="all"){
                 option.prize = prize;
             }
@@ -95,17 +111,15 @@ module.exports = {
             option.sort = 'createdAt DESC';
             
             PrizeCoupon.find(option).populate('appUser').exec(function(err, results){
-
+                if(err){
+                    return res.serverError(err);
+                }
                 res.view('prize-winner', {results: results, ads: advertisements, moment: moment, prize: prize, adSelected: advertisementId});
             });
             
         });
-    },
-    redeemPrize: function(req, res){
-        advertisement.update({}, {redeem1PrizeQuantity: 0, redeem2PrizeQuantity: 0,redeem3PrizeQuantity: 0,redeem4PrizeQuantity: 0,redeem5PrizeQuantity: 0}).exec(function(err){
-            res.end();
-        })
     }
+    
     
     
 };

@@ -35,7 +35,9 @@ module.exports = {
         TopupRequest.create({user: user.id, client: clientId, topupValue: topupValue, name: name, contactPhone: contactPhone, email: email, remarks: remarks}).exec(function(err){
             var messageStr = "用户"+user.username+"充值请求已发车－充值:"+topupValue+"元";
             ClientMessage.create({client: clientId, message: messageStr}).exec(function(){
-                
+                if(err){
+                    return res.serverError(err);
+                }
                 res.redirect('/?message=OK');
             });
             
