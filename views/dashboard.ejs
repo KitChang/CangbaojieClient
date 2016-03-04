@@ -1,9 +1,9 @@
 
 <div class="content">
-    
+
     <div class="container container-fluid container-fullw bg-white">
         <div class=“row”>
-            <% 
+            <%
             if(req.param('message')=="OK"){
             %>
             <p>
@@ -18,7 +18,7 @@
             <%
                 }
             %>
-            
+
             <div class="col-sm-4">
                 <div class="panel panel-white panel-default-cbj no-radius text-center full-width">
                 <div class="panel-body">
@@ -99,9 +99,9 @@
                                 <%
                                 }
                                 %>
-                                
-                                
-                                
+
+
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -113,7 +113,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -125,8 +125,8 @@
                                 <%
                                 }
                                 %>
-                                
-                                
+
+
                             </select>
                         </div>
                         </div>
@@ -139,14 +139,14 @@
                                 var ad;
                                 while(ads.length){
                                     ad = ads.pop();
-                                    
+
                                     if(req.param('advertisement')&&ad.id==req.param('advertisement')){
                             %>
                             <option value="<%=ad.id%>" selected><%=ad.title%></option>
                             <%
                                     }else{
                             %>
-                            
+
                             <option value="<%=ad.id%>"><%=ad.title%></option>
                             <%
                                     }
@@ -157,11 +157,11 @@
                         </div>
                         <button class="btn btn-primary">搜索</button>
                     </form>
-                      
+
                     <div class="col-md-7">
-                        
+
                     <div class="panel panel-default-cbj full-width">
-                        <div style="background-color: #FFE301!important;" class="panel-heading"><b>推广监控（近七日）</b></div>
+                        <div style="background-color: #FFE301!important;" class="panel-heading"><b>推广监控（近30日）</b></div>
                         <div id="panel" class="panel-body">
                         </div>
                         <canvas id="access-ctx" style="width:100%; height: 450px;"></canvas>
@@ -214,12 +214,12 @@
                     }
                     %>
                     </div>
-                    
-                    
-                    
+
+
+
                 </div>
             </div>
-            
+
         </div>
         </div>
 <div class="row">
@@ -227,8 +227,8 @@
     <div class="panel panel-white panel-default-cbj no-radius full-width">
         <div style="background-color: #FFE301!important;" class="panel-heading"><b>我的消息</b></div>
         <div class="panel-body text-center">
-            
-        
+
+
         <div style="margin-bottom: 5px;" class="list-group">
         <%
             var message;
@@ -241,7 +241,7 @@
         <%
             }
         %>
-        
+
 
         </div>
         <a style="font-size: 12px;" class="fancybox right" href="/dashboard/all-client-messages">
@@ -252,7 +252,7 @@
 </div>
 </div>
 
-          
+
       </div>
       <div id="message">
         <form id="msg-form" method="post" action="/message">
@@ -286,7 +286,7 @@
         </form>
 
       </div>
-    
+
       <div id="topup">
         <form id="topup-form" method="post" action="/topup">
           <div class="form-group">
@@ -317,12 +317,12 @@
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    
-    
+
+
     <script src="/js/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script 
-    
+    <script
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" charset="utf8" src="/js/series.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -337,7 +337,7 @@
 
 <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
 <script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
-    
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
     <script>
@@ -376,7 +376,7 @@
                 if($("#name").val()=="" || $("#title").val()==""){
                     errMsg.push("星号不为空");
                 }
-                
+
                 if(errMsg.length > 0){
                     alert(errMsg.join('\n'));
                     return;
@@ -398,18 +398,18 @@
                 if ($("#topupname").val()=="" || $("#topupValue").val()==""){
                     errMsg.push("星号不为空");
                 }
-                
+
                 if(errMsg.length > 0){
                     alert(errMsg.join('\n'));
                     return;
                 }
                 $("#topup-form").submit();
         })
-        
-        
-        
+
+
+
     });
-        
+
     $("#topup").hide();
     $("#message").hide();
         function populateCity(){
@@ -418,7 +418,7 @@
             $("#city").append("<option value=''>所有城市</option>");
             return;
         }
-            
+
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
@@ -455,7 +455,7 @@
           $("#region").append(html);
           });
         }
-            
+
         function populateStreet(){
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
@@ -464,7 +464,7 @@
                 $("#street").append("<option value=''>所有街道</option>");
                 return;
             }
-            
+
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
             }).done(function(data){
@@ -480,8 +480,8 @@
               $("#street").append(html);
             });
         }
-            
-    
+
+
         $("#state").change(function(){
             $("#city").empty();
             $("#region").empty();
@@ -500,7 +500,7 @@
             $("#street").empty();
             populateStreet();
         });
-        
+
         s = new Series().y(function(d){return d.sum});
         <%
             if(access!=null)
@@ -512,27 +512,27 @@
                 item.time = result.createdAt;
                 item.sum = 1;
         %>
-            
+
             s.put({time: "<%=item.time%>", sum: <%=item.sum%>});
         <%
             }
-        
+
         %>
             var aggreData = [];
             if(s.length!=0){
                     aggreData = Series.y(function(d){ return d.sum; })
                     .aggregation(Series.sum)
-                    .key(function(d){ 
+                    .key(function(d){
                       var createdAt = d.time;
                       key = moment(createdAt).format("MM-DD");
                       return key })(s);
                 }
-                
-            dataAccess = Series.range(0, 8).map(function(d){
+
+            dataAccess = Series.range(0, 31).map(function(d){
                 var v;
-                var fromDate = moment(new Date()).subtract(7, "days");
+                var fromDate = moment(new Date()).subtract(30, "days");
                 var date_i = moment(fromDate).add(d, "days");
-                for(var i=0; i<aggreData.length; i++) {   
+                for(var i=0; i<aggreData.length; i++) {
 
                 if(aggreData[i].t==(date_i.format("MM-DD"))){
                     v = aggreData[i].y;
@@ -550,7 +550,7 @@
             var y = [], t = [];
             dataAccess.forEach(function(d){
             y.push(d.v);t.push(d.t);});
-            
+
             data2 = {
                     labels: t,
                     datasets: [
@@ -571,18 +571,18 @@
                 myLineChart = new Chart(ctx).Line(data2, {
                 bezierCurve: false
             });
-            
+
             var dataPrize = new Series().y(function(d){return d.sum});
-            
-            
-            
-            
-            
-            
-            
-            
-        
+
+
+
+
+
+
+
+
+
         </script>
-      
+
 
 </div>

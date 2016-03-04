@@ -1,12 +1,12 @@
 <link href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
-    
+
       <div class="container">
         <div class="row ">
             <div class="panel panel-default-cbj full-width">
                 <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
                               <li><b>获奖统计</b></li>
-                </ol>      
-                    
+                </ol>
+
                 <div class="panel-body ">
                     <form class="form-inline" action="/prize-winner/search" method="get">
                         <div style="margin-bottom: 10px;" class="form-group">
@@ -18,7 +18,7 @@
                                 var ad;
                                 while(ads.length){
                                     ad = ads.pop();
-                            
+
                                     if(ad.id==adSelected){
                                     %>
                                         <option value="<%=ad.id%>" selected><%=ad.title%></option>
@@ -42,11 +42,11 @@
                                 var prizeValArr = ["1", "2", "3", "4", "5", "all"];
                                 var prizeStrArr = ["一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "所有奖"];
                                 for(var i=0; i<prizeValArr.length; i++){
-                                    
+
                                     if(prize==prizeValArr[i]){
                             %>
                             <option value="<%=prizeValArr[i]%>" selected><%=prizeStrArr[i]%></option>
-                            <%          
+                            <%
                                     }else{
                             %>
                                         <option value="<%=prizeValArr[i]%>"><%=prizeStrArr[i]%></option>
@@ -63,11 +63,11 @@
                             <option value="3">三等奖</option>
                             <option value="4">四等奖</option>
                             <option value="5">五等奖</option>
-                            
+
                             <%
                             }
                             %>
-                            
+
                         </select>
                         </div>
                         <br>
@@ -82,7 +82,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
@@ -95,7 +95,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -118,18 +118,18 @@
                                 <%
                                 }
                                 %>
-                               
+
                             </select>
                         </div>
                         <button class="btn btn-primary">搜索</button>
                     </form>
-                    
-                    
+
+
                 </div>
                 <div class="panel-body">
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th id="sortDate">日期</th><th>奖项</th><th>用户名</th><th>用户联系</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
+                    <tr><th id="sortDate">日期</th><th>奖项</th><th>用户名</th><th>用户联系</th><th>领奖</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
                     </thead>
                     <tbody>
                     <%
@@ -147,9 +147,13 @@
                         }
                         var prizeStrArr = ["所有奖", "一等奖", "二等奖", "三等奖", "四等奖", "五等奖"];
                         var prize = prizeStrArr[parseInt(row.prize)];
-                        
+                        var picked = "未领奖"
+                        if(row.picked){
+                          picked = "已领奖";
+                        }
+
                     %>
-                    <tr><td><%=date2%></td><td><%=prize%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>
+                    <tr><td><%=date2%></td><td><%=prize%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=picked%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>
                     <%
                     }
                     %>
@@ -158,14 +162,14 @@
                 </div>
             </div>
         </div>
-        
+
       </div>
-    
+
       <hr>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    
-    
+
+
     <script src="/js/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
@@ -181,11 +185,11 @@
             populateRegion();
             populateStreet();
             $("#sortDate").trigger("click");
-            
+
         });
         function populateCity(){
         var selectedState = $("#state option:selected").text();
-            
+
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
@@ -222,7 +226,7 @@
           $("#region").append(html);
           });
         }
-            
+
         function populateStreet(){
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
@@ -231,7 +235,7 @@
                 $("#street").append("<option value=''>所有街道</option>");
                 return;
             }
-            
+
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
             }).done(function(data){
@@ -247,8 +251,8 @@
               $("#street").append(html);
             });
         }
-            
-    
+
+
         $("#state").change(function(){
             $("#city").empty();
             $("#region").empty();
@@ -269,7 +273,3 @@
         });
 
     </script>
-
-    
-      
-
