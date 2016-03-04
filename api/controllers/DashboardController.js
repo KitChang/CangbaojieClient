@@ -34,7 +34,7 @@ module.exports = {
                     return res.serverError(err);
                 }
 
-                access.find(option).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
+                access.find({client: user.client.id}).where({ "createdAt" : { ">=" : todayStart, "<" : todayEnd }}).exec(function(err, accessToday){
                     if(err){
                         return res.serverError(err);
                     }
