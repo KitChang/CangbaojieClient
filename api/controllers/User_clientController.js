@@ -1,8 +1,8 @@
 passwordHash = require('password-hash');
 module.exports = {
-	
+
     login: function(req, res){
-        
+
         var username = req.param('username');
         var password = req.param('password');
         user_client.findOne({username: username}).populate('client').exec(function(err, doc) {
@@ -10,7 +10,8 @@ module.exports = {
                 return res.serverError(err);
             }
             if(doc==null||!passwordHash.verify(password, doc.password)){
-                res.redirect('/login');
+								var message = "用户名或密码错误";
+								res.redirect('/login?omitNavigation=omitNavigation&message='+encodeURIComponent(message));
                 return;
             }
             var Session = require("../lib/session");
@@ -18,7 +19,7 @@ module.exports = {
             session.login(doc);
             res.redirect("/");
         });
-        
+
     },
     logout: function(req, res){
         var Session = require('../lib/session');
@@ -26,9 +27,8 @@ module.exports = {
         session.logout();
         res.redirect("/login");
     }
-    
-    
-    
-    
-};
 
+
+
+
+};
