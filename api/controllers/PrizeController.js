@@ -13,13 +13,13 @@ module.exports = {
         if(!user){
             return res.serverError();
         }
-        advertisement.find({client: user.client.id}).exec(function(err, ads){
+        advertisement.find({client: user.client.id, deleted: false}).exec(function(err, ads){
             if(err){
                 return res.serverError(err);
             }
             res.view('prize-stock', {ads: ads, selectedAd: null});
         });
-        
+
     },
     prizeStockSearch: function(req, res){
         var addId = req.param('advertisement');
@@ -29,7 +29,7 @@ module.exports = {
         if(!user){
             return res.serverError();
         }
-        advertisement.find({client: user.client.id}).exec(function(err, ads){
+        advertisement.find({client: user.client.id, deleted: false}).exec(function(err, ads){
             if(err){
                 return res.serverError(err);
             }
@@ -39,9 +39,9 @@ module.exports = {
                 }
                 res.view('prize-stock', {ads: ads, selectedAd: ad});
             })
-          
+
         })
-          
+
     },
     prizeWinner: function(req, res){
         var Session = require("../lib/session");
@@ -61,8 +61,8 @@ module.exports = {
                 }
                 res.view('prize-winner', {results: results, ads: advertisements, moment: moment, prize: "all", adSelected: null});
             });
-            
-            
+
+
         });
     },
     prizeWinnerSearch: function(req, res){
@@ -73,7 +73,7 @@ module.exports = {
         var prize = req.param('prize');
         var option = {};
         advertisement.find({client: user.client.id}).exec(function(err, advertisements){
-            
+
             if(err){
                 return res.serverError(err);
             }
@@ -89,13 +89,13 @@ module.exports = {
                 }
                 option.advertisement = adId;
             }
-            
-            
+
+
             var state = req.param('state');
             var city = req.param('city');
             var region = req.param('region');
             var street = req.param('street');
-            
+
             if (state&&state!="") {
                 option.state = state;
             }
@@ -109,18 +109,17 @@ module.exports = {
                 option.street = street;
             }
             option.sort = 'createdAt DESC';
-            
+
             PrizeCoupon.find(option).populate('appUser').exec(function(err, results){
                 if(err){
                     return res.serverError(err);
                 }
                 res.view('prize-winner', {results: results, ads: advertisements, moment: moment, prize: prize, adSelected: advertisementId});
             });
-            
+
         });
     }
-    
-    
-    
-};
 
+
+
+};

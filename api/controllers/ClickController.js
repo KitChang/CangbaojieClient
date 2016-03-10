@@ -10,7 +10,7 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
-        advertisement.find({client: user.client.id}).exec(function(err, ads){
+        advertisement.find({client: user.client.id, deleted: false}).exec(function(err, ads){
             if(err){
                 return res.serverError(err);
             }
@@ -30,7 +30,7 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
-        advertisement.find({client: user.client.id, sort: 'createdAt ASC'}).exec(function(err, ads){
+        advertisement.find({client: user.client.id, deleted: false, sort: 'createdAt ASC'}).exec(function(err, ads){
             if(err){
                 return res.serverError(err);
             }
@@ -53,9 +53,9 @@ module.exports = {
                 if(duration==NaN)
                     duration = 0;
                 var dateFrom = moment().subtract(duration, "days").toDate();
-                
+
             }
-            
+
             var locationType = req.param('locationType');
             var state = req.param('state');
             var city = req.param('city');
@@ -63,7 +63,7 @@ module.exports = {
             var street = req.param('street');
             var option = {};
             var advertisementId = req.param('advertisement');
-            
+
             if(advertisementId==""){
                 var adId = [];
                 for (var i=0; i<ads.length; i++){
@@ -96,12 +96,11 @@ module.exports = {
                 }
                 res.view("click-statistics", {ads: ads, results: results, moment: moment});
             });
-            
+
         })
-        
 
-    
+
+
     }
-    
-};
 
+};

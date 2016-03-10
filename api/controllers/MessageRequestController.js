@@ -12,10 +12,10 @@ module.exports = {
         var user = session.user();
         var clientId = user.client.id;
         res.view('message');
-        
+
     },
     create: function(req, res){
-        
+
         var advertisementId = req.param('advertisement');
         var state = req.param('state');
         var city = req.param('city');
@@ -26,8 +26,8 @@ module.exports = {
         var session = new Session(req.session);
         var user = session.user();
         var clientId = user.client.id;
-        
-        advertisement.findOne({id: advertisementId, client: clientId}).exec(function(err, ad){
+
+        advertisement.findOne({id: advertisementId, client: clientId, deleted: false}).exec(function(err, ad){
             if(!ad){
                 return res.serverError();
             }
@@ -39,6 +39,5 @@ module.exports = {
             });
         });
     },
-	
-};
 
+};

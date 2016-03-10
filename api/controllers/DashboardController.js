@@ -19,7 +19,7 @@ module.exports = {
             if(err){
                 return res.serverError(err);
             }
-            advertisement.find({client: user.client.id}).exec(function(err, ads){
+            advertisement.find({client: user.client.id, deleted: false}).exec(function(err, ads){
                 if(err){
                     return res.serverError(err);
                 }
@@ -49,27 +49,27 @@ module.exports = {
                         }
                         res.view('dashboard', {ads: ads, selectedAd: null, access: accessResults,moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, user: user, clientMessages: clientMessages, client: clientOne});
                     });
-                        
+
                 });
                 });
-            
+
             });
-            
-            
+
+
         });
-        
+
     },
     dashboardSearch: function(req, res){
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
         var clientId = user.client.id;
-        
+
         client.findOne({id: user.client.id}).exec(function(err, clientOne){
             if(err){
                 return res.serverError(err);
             }
-            advertisement.find({client: user.client.id}).exec(function(err, ads){
+            advertisement.find({client: user.client.id, deleted: false}).exec(function(err, ads){
                 if(err){
                     return res.serverError(err);
                 }
@@ -130,7 +130,7 @@ module.exports = {
                         if(err){
                             return res.serverError(err);
                         }
-                        res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});    
+                        res.view('dashboard', {ads: ads, selectedAd: ad, moment: moment, accessToday: accessCountToday, totalAccess: totalAccess, access: accessResults, user: user, clientMessages: clientMessages, client: clientOne});
                         });
 
                     });
@@ -157,6 +157,5 @@ module.exports = {
         });
     }
 
-    
-};
 
+};
