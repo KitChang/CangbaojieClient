@@ -6,16 +6,14 @@
  */
 
 module.exports = {
-	new: function(req, res){
+		new: function(req, res){
         res.view('topup-request-new');
-    
     },
     create: function(req, res){
-        
+
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
-        console.log(user);
         if (user.client==undefined) {
             return;
         };
@@ -40,11 +38,10 @@ module.exports = {
                 }
                 res.redirect('/?message=OK');
             });
-            
-            
-        });
-        
-    },
-    
-};
 
+
+        });
+
+    },
+
+};

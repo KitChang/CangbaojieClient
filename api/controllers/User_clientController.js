@@ -2,7 +2,6 @@ passwordHash = require('password-hash');
 module.exports = {
 
     login: function(req, res){
-
         var username = req.param('username');
         var password = req.param('password');
         user_client.findOne({username: username}).populate('client').exec(function(err, doc) {
@@ -19,7 +18,6 @@ module.exports = {
             session.login(doc);
             res.redirect("/");
         });
-
     },
     logout: function(req, res){
         var Session = require('../lib/session');
@@ -27,8 +25,4 @@ module.exports = {
         session.logout();
         res.redirect("/login");
     }
-
-
-
-
 };

@@ -10,14 +10,10 @@ module.exports = {
         var Session = require("../lib/session");
         var session = new Session(req.session);
         var user = session.user();
-        console.log("client id" +user.client.id);
         var clientId = user.client.id;
         request.find({client: clientId}).populate('advertisement').exec(function(err, results){
-            
             if(err)
                 return res.serverError(err);
-            console.log("request.le"+results.length);
-            
             res.view('request', {results: results});
             });
     },
@@ -46,7 +42,6 @@ module.exports = {
             });
         });
     }
-    
-    
-};
 
+
+};
