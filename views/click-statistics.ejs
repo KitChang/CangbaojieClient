@@ -4,11 +4,11 @@
             <div class="panel panel-default-cbj full-width">
                 <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
                     <li>点击量</a></li>
-                </ol>      
-                    
+                </ol>
+
                 <div class="panel-body">
                     <form class="form-inline" action="/click-statistics/search" method="get">
-                        
+
                         <div class="form-group">
                              <label>推广途径</label>
                             <select class="form-control" id="type" name="locationType">
@@ -24,6 +24,7 @@
                                 <option value="公交车">公交车</option>
                                 <option value="电梯">电梯</option>
                                 <option value="路名牌">路名牌</option>
+                                <option value="商区公共设备">商区公共设备</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -37,7 +38,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
@@ -50,7 +51,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -62,7 +63,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -74,9 +75,9 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
-                        </div><br/><br/>  
+                        </div><br/><br/>
                         <div class="form-group">
                             <label>时间</label>
                             <select class="form-control" id="duration" name="duration">
@@ -90,7 +91,7 @@
                                     var duration = req.param("duration");
                                     var duration2 = durationStr[duration];
                                 %>
-                                
+
                                 <option value="<%=req.param('duration')%>" selected><%=duration2%></option>
                                 <%
                                 }
@@ -116,7 +117,7 @@
                         <%
                             }
                         %>
-                        
+
                         </div>
                         <div class="form-group" id="dateToDiv">
                         <label>至</label>
@@ -158,9 +159,9 @@
                         </select>
                         </div>
                         <button class="btn btn-primary">搜索</button>
-                        
+
                     </form>
-                    
+
                 </div>
                 <div class="panel-body">
                 <table class="table table-striped" id="table">
@@ -168,7 +169,7 @@
                     <tr><th id="sortDate">日期</th><th>用户名</th><th>联系电话</th><th>省</th><th>城市</th><th>地区</th><th>街道</th></tr>
                 </thead>
                 <tbody>
-                
+
                 <%
                     if(results!=null)
                         while(results.length){
@@ -184,32 +185,32 @@
                             else {
                                 phone = "wechat用戶";
                             }
-                            
-                            
+
+
                 %>
                 <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td></tr>
                 <%
                         }
-                
-                
-                    
+
+
+
                 %>
                 </tbody>
                 </table>
                 </div>
-                
-                
+
+
             </div>
         </div>
         </div>
 
       </div>
-    
+
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    
-    
+
+
     <script src="/js/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
@@ -220,27 +221,27 @@
                 "order": [[0, "desc"]]
             });
     </script>
-    
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
         <script>
-            
-            
+
+
         $(document).ready(function(){
 
             populateCity();
             populateRegion();
             populateStreet();
             $("#sortDate").trigger("click");
-            
+
         });
         $("#dateFrom").daterangepicker({singleDatePicker: true});
         $("#dateTo").daterangepicker({singleDatePicker: true});
-        
+
         function populateCity(){
         var selectedState = $("#state option:selected").text();
-            
+
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
@@ -277,7 +278,7 @@
           $("#region").append(html);
           });
         }
-            
+
         function populateStreet(){
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
@@ -286,7 +287,7 @@
                 $("#street").append("<option value=''>所有街道</option>");
                 return;
             }
-            
+
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
             }).done(function(data){
@@ -302,8 +303,8 @@
               $("#street").append(html);
             });
         }
-            
-    
+
+
         $("#state").change(function(){
             $("#city").empty();
             $("#region").empty();
@@ -326,7 +327,7 @@
                 $("#dateFromDiv").hide();
                 $("#dateToDiv").hide();
             }
-            
+
             $("#duration").change(function(){
                 if($("#duration").val()=="define"){
                     $("#dateFromDiv").show();
@@ -337,5 +338,3 @@
                 }
             })
         </script>
-    
-

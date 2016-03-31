@@ -4,15 +4,15 @@
                     <ol class="breadcrumb panel-heading">
                         <li><a href='/request'>我要推广</a></li>
                         <li>创建推广</li>
-                    </ol>  
+                    </ol>
                     <div class="panel-body">
-                        <form id="form" name="form" action="/request" method="post"> 
+                        <form id="form" name="form" action="/request" method="post">
                         <!--
                         <div class="form-group">
                                 <label>广告标题 <span class="mandatory">*</span></label>
                                 <input type="text" name="title" id="title" class="form-control">
                         </div>-->
-                       
+
                         <div class="form-group">
                             <select class="form-control" id="state" name="state">
                                 <option value="所有省">所有省</option>
@@ -38,12 +38,11 @@
                         </form>
                         <input type="hidden" name="client" value="<%=req.param('client')%>">
                         <input type="button" class="btn btn-default" value="创建" onClick="javascript:document.form.submit();"/>
-                        <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>  
+                        <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>
                     </div>
-                </div>              
+                </div>
         </div>
-        
+
     </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    
